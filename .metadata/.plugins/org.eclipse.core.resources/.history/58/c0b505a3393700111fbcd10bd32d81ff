@@ -1,0 +1,38 @@
+/**
+ * @file sys3046Template.c
+ * @brief my short description for sys3046Template.c
+ */   
+//==========================================================
+//Some usefull comments
+//==========================================================
+
+#define GPIO_PORTA_IN  *((volatile unsigned long *) 0x50000010)
+#define GPIO_PORTA_OUT *((volatile unsigned long *) 0x50000014)
+#define LED2 0x00000020  //Bit 5 à 1
+
+
+void myFirstFunction(int parameter1)
+{
+
+	if ((GPIO_PORTA_OUT & LED2)==LED2){
+		if(!(parameter1)){
+			GPIO_PORTA_OUT= (GPIO_PORTA_OUT & ~LED2);
+		}
+	}
+	else{
+		if(parameter1){
+			GPIO_PORTA_OUT= (GPIO_PORTA_OUT | LED2);
+		}
+	}
+}
+
+//==========================================================
+//Some usefull comments
+//==========================================================
+void mySecondFunction( char * parameter1, long parameter2)
+{
+	int value=0;  //some comments
+//  
+//
+  return value;
+}

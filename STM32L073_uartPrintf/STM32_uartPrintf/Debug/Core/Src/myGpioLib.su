@@ -1,0 +1,4 @@
+../Core/Src/myGpioLib.c:24:6:LED2_Write	16	static
+../Core/Src/myGpioLib.c:32:9:LED2_Read	8	static
+../Core/Src/myGpioLib.c:37:9:B1_Read	8	static
+../Core/Src/myGpioLib.c:43:6:GPIO_Test	24	static

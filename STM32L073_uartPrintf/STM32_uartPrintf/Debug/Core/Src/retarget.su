@@ -1,0 +1,9 @@
+../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_usart.h:2635:26:LL_USART_IsActiveFlag_TXE	16	static
+../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_usart.h:3632:22:LL_USART_TransmitData8	16	static
+../Core/Src/retarget.c:24:6:RetargetInit	16	static
+../Core/Src/retarget.c:32:5:_isatty	16	static
+../Core/Src/retarget.c:40:5:_write	32	static
+../Core/Src/retarget.c:55:5:_close	16	static
+../Core/Src/retarget.c:63:5:_lseek	24	static
+../Core/Src/retarget.c:72:5:_read	24	static,ignoring_inline_asm
+../Core/Src/retarget.c:91:5:_fstat	16	static
