@@ -62,16 +62,6 @@ uint8_t B1_Read(void) {
     return (GPIOC_IDR & B1_BIT) ? 0 : 1;
 }
 
-// numéro 9 :
-void LED2_On_Duration(uint32_t duration_100ms) {
-    uint32_t start = get_tick;
-    LED2_Write(1);
-    while ((get_tick - start) < (duration_100ms * 100)){
-    	printf("Tick : %lu ms\r\n", get_tick);
-    }
-    LED2_Write(0);
-}
-
 /* ---------- Etape 4 : Tests unitaires ---------- */
 void GPIO_Test(void) {
     uint8_t result;
@@ -118,4 +108,10 @@ void GPIO_Test(void) {
 }
 
 
-
+// numéro 9 :
+void LED2_On_Duration(uint32_t duration_100ms) {
+    uint32_t start = get_tick;
+    LED2_Write(1);
+    while ((get_tick - start) < (duration_100ms * 100));
+    LED2_Write(0);
+}

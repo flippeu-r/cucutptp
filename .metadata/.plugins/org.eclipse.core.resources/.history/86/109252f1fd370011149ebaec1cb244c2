@@ -114,7 +114,6 @@ int main(void)
   RetargetInit(USART2);
   getchInit();
   LL_USART_EnableIT_RXNE(USART2);
-  LL_SYSTICK_EnableIT();
 
   printf("\r\n=== SYS3046 - GPIO Library ===\r\n");
 

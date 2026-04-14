@@ -67,7 +67,7 @@ void LED2_On_Duration(uint32_t duration_100ms) {
     uint32_t start = get_tick;
     LED2_Write(1);
     while ((get_tick - start) < (duration_100ms * 100)){
-    	printf("Tick : %lu ms\r\n", get_tick);
+    	pritnf("%lu" (unsigned long) get_tick);
     }
     LED2_Write(0);
 }
