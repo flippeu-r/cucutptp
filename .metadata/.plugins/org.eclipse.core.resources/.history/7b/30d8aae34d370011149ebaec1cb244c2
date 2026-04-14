@@ -24,38 +24,7 @@
 #define GPIOC_IDR  *((volatile uint32_t *) 0x50000810)
 #define B1_BIT     (1U << 13)
 
-/* ---- Registres GPIOA complets ---- */
-#define GPIOA_MODER  *((volatile uint32_t *) 0x50000000)
-
 /* ---- Prototypes ---- */
-
-/**
- * @brief Ecrit l'état logique d'une sortie du port A
- * @param pin  Numéro de la broche (0 à 15)
- * @param state 1 = niveau haut, 0 = niveau bas
- */
-void GPIOA_WritePin(uint8_t pin, uint8_t state);
-
-/**
- * @brief Lit l'état logique d'une sortie du port A (ODR)
- * @param pin  Numéro de la broche (0 à 15)
- * @return 1 si haut, 0 si bas
- */
-uint8_t GPIOA_ReadOutput(uint8_t pin);
-
-/**
- * @brief Lit l'état logique d'une entrée du port A (IDR)
- * @param pin  Numéro de la broche (0 à 15)
- * @return 1 si haut, 0 si bas
- */
-uint8_t GPIOA_ReadInput(uint8_t pin);
-
-/**
- * @brief Change l'état d'une sortie du port A (toggle)
- * @param pin  Numéro de la broche (0 à 15)
- */
-void GPIOA_TogglePin(uint8_t pin);
-
 
 /**
  * @brief Allume ou éteint la LED2

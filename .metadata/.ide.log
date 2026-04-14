@@ -7,3 +7,8 @@
 2026-04-13 09:51:48,829 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] AVERTISSEMENT: Java vector incubator module is not readable. For optimal vector performance, pass '--add-modules jdk.incubator.vector' to enable Vector API.
 2026-04-13 09:51:48,829 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 
 2026-04-13 16:51:54,594 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 
+2026-04-13 16:52:41,629 [INFO] Activator:176 - 
+
+
+2026-04-13 16:52:41,634 [INFO] Activator:177 - !SESSION log4j initialized
+2026-04-13 16:52:51,806 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] 

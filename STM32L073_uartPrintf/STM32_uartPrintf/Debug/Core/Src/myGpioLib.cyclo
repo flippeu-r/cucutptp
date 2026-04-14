@@ -1,4 +1,8 @@
-../Core/Src/myGpioLib.c:24:6:LED2_Write	2
-../Core/Src/myGpioLib.c:32:9:LED2_Read	1
-../Core/Src/myGpioLib.c:37:9:B1_Read	1
-../Core/Src/myGpioLib.c:43:6:GPIO_Test	6
+../Core/Src/myGpioLib.c:24:6:GPIOA_WritePin	2
+../Core/Src/myGpioLib.c:32:9:GPIOA_ReadOutput	1
+../Core/Src/myGpioLib.c:37:9:GPIOA_ReadInput	1
+../Core/Src/myGpioLib.c:42:6:GPIOA_TogglePin	1
+../Core/Src/myGpioLib.c:47:6:LED2_Write	2
+../Core/Src/myGpioLib.c:55:9:LED2_Read	1
+../Core/Src/myGpioLib.c:60:9:B1_Read	1
+../Core/Src/myGpioLib.c:66:6:GPIO_Test	9

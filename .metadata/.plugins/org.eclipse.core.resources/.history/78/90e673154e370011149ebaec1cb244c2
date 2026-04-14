@@ -85,24 +85,5 @@ void GPIO_Test(void) {
     result = B1_Read();
     printf("Bouton B1 -> Read = %d : %s\r\n", result, (result == 1) ? "OK" : "Echec");
 
-    /* -- Tests étapes 6-9 -- */
-    printf("\r\n--- Tests GPIOA generique ---\r\n");
-
-    /* Etape 6 & 7 : écriture/lecture sur PA5 (LED2) */
-    GPIOA_WritePin(5, 1);
-    result = GPIOA_ReadOutput(5);
-    printf("PA5 WritePin(1) -> ReadOutput = %d : %s\r\n", result, (result==1)?"OK":"Echec");
-
-    GPIOA_WritePin(5, 0);
-    result = GPIOA_ReadOutput(5);
-    printf("PA5 WritePin(0) -> ReadOutput = %d : %s\r\n", result, (result==0)?"OK":"Echec");
-
-    /* Etape 9 : toggle */
-    GPIOA_WritePin(5, 0);
-    GPIOA_TogglePin(5);
-    result = GPIOA_ReadOutput(5);
-    printf("PA5 Toggle      -> ReadOutput = %d : %s\r\n", result, (result==1)?"OK":"Echec");
-    GPIOA_WritePin(5, 0); // on remet à 0 après le test
-
     printf("=== FIN DES TESTS ===\r\n\r\n");
 }

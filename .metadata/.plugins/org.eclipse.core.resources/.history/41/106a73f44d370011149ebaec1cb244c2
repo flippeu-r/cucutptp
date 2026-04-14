@@ -5,7 +5,7 @@
  * @date 2024
  *
  *
- *@mainpage  SYS3046 course template
+ @mainpage  SYS3046 course template
  *
  *            le caca
  *            Project description...Project description...Project description...
@@ -19,29 +19,6 @@
 
 #include "myGpioLib.h"
 #include <stdio.h>
-
-/* ---------- Etape 6 : Ecriture sortie port A ---------- */
-void GPIOA_WritePin(uint8_t pin, uint8_t state) {
-    if (state)
-        GPIOA_ODR = (GPIOA_ODR | (1U << pin));
-    else
-        GPIOA_ODR = (GPIOA_ODR & ~(1U << pin));
-}
-
-/* ---------- Etape 7 : Lecture sortie port A (ODR) ---------- */
-uint8_t GPIOA_ReadOutput(uint8_t pin) {
-    return (GPIOA_ODR & (1U << pin)) ? 1 : 0;
-}
-
-/* ---------- Etape 8 : Lecture entrée port A (IDR) ---------- */
-uint8_t GPIOA_ReadInput(uint8_t pin) {
-    return (GPIOA_IDR & (1U << pin)) ? 1 : 0;
-}
-
-/* ---------- Etape 9 : Toggle sortie port A ---------- */
-void GPIOA_TogglePin(uint8_t pin) {
-    GPIOA_ODR = (GPIOA_ODR ^ (1U << pin));
-}
 
 /* ---------- Etape 1 ---------- */
 void LED2_Write(uint8_t state) {
@@ -84,25 +61,6 @@ void GPIO_Test(void) {
     while (!B1_Read() && timeout--);
     result = B1_Read();
     printf("Bouton B1 -> Read = %d : %s\r\n", result, (result == 1) ? "OK" : "Echec");
-
-    /* -- Tests étapes 6-9 -- */
-    printf("\r\n--- Tests GPIOA generique ---\r\n");
-
-    /* Etape 6 & 7 : écriture/lecture sur PA5 (LED2) */
-    GPIOA_WritePin(5, 1);
-    result = GPIOA_ReadOutput(5);
-    printf("PA5 WritePin(1) -> ReadOutput = %d : %s\r\n", result, (result==1)?"OK":"Echec");
-
-    GPIOA_WritePin(5, 0);
-    result = GPIOA_ReadOutput(5);
-    printf("PA5 WritePin(0) -> ReadOutput = %d : %s\r\n", result, (result==0)?"OK":"Echec");
-
-    /* Etape 9 : toggle */
-    GPIOA_WritePin(5, 0);
-    GPIOA_TogglePin(5);
-    result = GPIOA_ReadOutput(5);
-    printf("PA5 Toggle      -> ReadOutput = %d : %s\r\n", result, (result==1)?"OK":"Echec");
-    GPIOA_WritePin(5, 0); // on remet à 0 après le test
 
     printf("=== FIN DES TESTS ===\r\n\r\n");
 }
