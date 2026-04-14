@@ -14,6 +14,6 @@
 ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_pwr.h:271:22:LL_PWR_SetRegulVoltageScaling	1
 ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_pwr.h:678:26:LL_PWR_IsActiveFlag_VOS	1
 ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_usart.h:3001:22:LL_USART_EnableIT_RXNE	1
-../Core/Src/main.c:84:5:main	5
-../Core/Src/main.c:153:6:SystemClock_Config	5
-../Core/Src/main.c:193:6:Error_Handler	1
+../Core/Src/main.c:84:5:main	7
+../Core/Src/main.c:162:6:SystemClock_Config	5
+../Core/Src/main.c:202:6:Error_Handler	1

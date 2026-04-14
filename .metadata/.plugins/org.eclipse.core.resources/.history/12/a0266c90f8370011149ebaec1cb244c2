@@ -115,8 +115,7 @@ int main(void)
   LL_USART_EnableIT_RXNE(USART2);
 
   printf("\r\n=== SYS3046 - GPIO Library ===\r\n");
-
-  printf("Commandes : 1=LED ON, 0=LED OFF, t=Tests, d=Duree 2s\r\n\r\n");
+  printf("Commandes : 1=LED ON, 0=LED OFF, t=Tests\r\n\r\n");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -138,14 +137,6 @@ int main(void)
       }
       else if (c == 't') {
         GPIO_Test();
-      }
-      else if (c == 'd') {
-          printf("LED2 allumee 2 secondes...\r\n");
-          LED2_On_Duration(20);
-          printf("LED2 eteinte\r\n");
-      }
-      else if (c == 'v') {
-          printf("Tick actuel : %lu ms\r\n", get_tick);
       }
     }
     /* USER CODE END WHILE */

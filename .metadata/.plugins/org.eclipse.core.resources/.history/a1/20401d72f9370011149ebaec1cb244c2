@@ -144,9 +144,6 @@ int main(void)
           LED2_On_Duration(20);
           printf("LED2 eteinte\r\n");
       }
-      else if (c == 'v') {
-          printf("Tick actuel : %lu ms\r\n", get_tick);
-      }
     }
     /* USER CODE END WHILE */
 

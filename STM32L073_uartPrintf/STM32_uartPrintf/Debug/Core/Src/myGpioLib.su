@@ -6,3 +6,4 @@
 ../Core/Src/myGpioLib.c:55:9:LED2_Read	8	static
 ../Core/Src/myGpioLib.c:60:9:B1_Read	8	static
 ../Core/Src/myGpioLib.c:66:6:GPIO_Test	24	static
+../Core/Src/myGpioLib.c:112:6:LED2_On_Duration	24	static

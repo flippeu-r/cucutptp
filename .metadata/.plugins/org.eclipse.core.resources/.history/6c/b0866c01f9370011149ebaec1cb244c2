@@ -23,8 +23,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "usart.h"
-
-#include "inttypes.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -130,7 +128,7 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
 	get_tick++;
-
+	printf("test 1");
 
 
   /* USER CODE BEGIN SysTick_IRQn 0 */

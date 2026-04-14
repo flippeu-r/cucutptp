@@ -145,7 +145,7 @@ int main(void)
           printf("LED2 eteinte\r\n");
       }
       else if (c == 'v') {
-          printf("Tick actuel : %lu ms\r\n", get_tick);
+          printf("Tick actuel : %lu ms\r\n", g_tickMs);
       }
     }
     /* USER CODE END WHILE */
