@@ -29,13 +29,6 @@
 
 /* ---- Prototypes ---- */
 
-
-
-extern volatile uint32_t get_tick;
-
-
-// ----------------------//
-void LED2_On_Duration(uint32_t duration_100ms);
 /**
  * @brief Ecrit l'état logique d'une sortie du port A
  * @param pin  Numéro de la broche (0 à 15)
