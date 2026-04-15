@@ -101,7 +101,7 @@ int main(void)
   /* USER CODE BEGIN SysInit */
   /* (rien ici - on attend que les périphériques soient initialisés) */
   /* USER CODE END SysInit */
-//
+
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART2_UART_Init();
