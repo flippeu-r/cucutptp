@@ -152,7 +152,10 @@ int main(void)
       else if (c == 'b') {
           printf("Clignotement 1Hz (appuyez RESET pour arreter)\r\n");
           LED2_Blink(5);  // 5 x 100ms = 500ms de demi-periode = 1Hz
-      }
+      }else if (c == 'b') {
+    	    printf("Clignotement 1Hz (appuyez RESET pour arreter)\r\n");
+    	    LED2_Blink(5);  // 5 x 100ms = 500ms de demi-periode = 1Hz
+    	}
     }
     /* USER CODE END WHILE */
 

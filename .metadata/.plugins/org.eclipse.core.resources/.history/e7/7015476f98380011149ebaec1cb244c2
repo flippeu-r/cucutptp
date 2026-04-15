@@ -51,13 +51,6 @@ void GPIOA_WritePin(uint8_t pin, uint8_t state);
 uint8_t GPIOA_ReadOutput(uint8_t pin);
 
 /**
- * @brief Clignotement infini de la LED2
- * @param half_period_100ms demi-période en 1/10s (ex: 5 = 500ms soit 1Hz)
- */
-void LED2_Blink(uint32_t half_period_100ms);
-
-
-/**
  * @brief Lit l'état logique d'une entrée du port A (IDR)
  * @param pin  Numéro de la broche (0 à 15)
  * @return 1 si haut, 0 si bas

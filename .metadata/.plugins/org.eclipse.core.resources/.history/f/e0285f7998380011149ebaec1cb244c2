@@ -149,10 +149,6 @@ int main(void)
       else if (c == 'v') {
           printf("Tick actuel : %lu ms\r\n", get_tick);
       }
-      else if (c == 'b') {
-          printf("Clignotement 1Hz (appuyez RESET pour arreter)\r\n");
-          LED2_Blink(5);  // 5 x 100ms = 500ms de demi-periode = 1Hz
-      }
     }
     /* USER CODE END WHILE */
 
