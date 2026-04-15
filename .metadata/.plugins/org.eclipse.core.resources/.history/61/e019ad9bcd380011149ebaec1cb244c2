@@ -158,15 +158,6 @@ int main(void)
           LED2_Blink_Duration(5, 50);  // 500ms demi-periode, 5s total
           printf("Fin clignotement\r\n");
       }
-      else if (c == 'm') {
-          DHT_data d = DHT_getData(&dht);
-          if (d.temp == -128.0f) {
-              printf("Erreur : capteur non detecte !\r\n");
-          } else {
-              printf("Temperature : %.1f C\r\n", d.temp);
-              printf("Humidite    : %.1f %%\r\n", d.hum);
-          }
-      }
     }
     /* USER CODE END WHILE */
 

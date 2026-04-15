@@ -9,7 +9,6 @@
 
 /* USER CODE BEGIN Includes */
 #include "myGpioLib.h"
-#include "DHT.h"
 /* USER CODE END Includes */
 
 
@@ -61,9 +60,6 @@
 
 /* USER CODE BEGIN PV */
 
-extern volatile uint32_t get_tick;
-DHT_sensor dht = {GPIOA, LL_GPIO_PIN_0, DHT22, LL_GPIO_PULL_NO};
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -95,6 +91,8 @@ int main(void)
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
 
   /* USER CODE BEGIN Init */
+  extern volatile uint32_t get_tick;
+  DHT_sensor dht = {GPIOA, LL_GPIO_PIN_0, DHT22, LL_GPIO_PULL_NO};
 
   /* USER CODE END Init */
 
@@ -157,15 +155,6 @@ int main(void)
           printf("Clignotement 1Hz pendant 5s...\r\n");
           LED2_Blink_Duration(5, 50);  // 500ms demi-periode, 5s total
           printf("Fin clignotement\r\n");
-      }
-      else if (c == 'm') {
-          DHT_data d = DHT_getData(&dht);
-          if (d.temp == -128.0f) {
-              printf("Erreur : capteur non detecte !\r\n");
-          } else {
-              printf("Temperature : %.1f C\r\n", d.temp);
-              printf("Humidite    : %.1f %%\r\n", d.hum);
-          }
       }
     }
     /* USER CODE END WHILE */

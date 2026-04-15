@@ -1,101 +1,10 @@
-14:24:12 **** Incremental Build of configuration Debug for project STM32_uartPrintf ****
+15:18:57 **** Incremental Build of configuration Debug for project STM32_uartPrintf ****
 make -j12 all 
-arm-none-eabi-gcc "../Core/Src/DHT.c" -mcpu=cortex-m0plus -std=gnu11 -g3 -DDEBUG -DSTM32L073xx -DUSE_FULL_LL_DRIVER -DHSE_VALUE=8000000 -DHSE_STARTUP_TIMEOUT=100 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DMSI_VALUE=2097000 -DHSI_VALUE=16000000 -DLSI_VALUE=37000 -DVDD_VALUE=3300 -DPREFETCH_ENABLE=0 -DINSTRUCTION_CACHE_ENABLE=1 -DDATA_CACHE_ENABLE=1 -c -I../Core/Inc -I../Drivers/STM32L0xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32L0xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/DHT.d" -MT"Core/Src/DHT.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/DHT.o"
-../Core/Src/DHT.c: In function 'goToOutput':
-../Core/Src/DHT.c:9:9: error: unknown type name 'GPIO_InitTypeDef'; did you mean 'LL_GPIO_InitTypeDef'?
-    9 |         GPIO_InitTypeDef GPIO_InitStruct = {0};
-      |         ^~~~~~~~~~~~~~~~
-      |         LL_GPIO_InitTypeDef
-../Core/Src/DHT.c:4:33: warning: implicit declaration of function 'HAL_GPIO_WritePin'; did you mean 'LL_GPIO_WriteReg'? [-Wimplicit-function-declaration]
-    4 | #define lineUp()                HAL_GPIO_WritePin(sensor->DHT_Port, sensor->DHT_Pin, GPIO_PIN_SET)
-      |                                 ^~~~~~~~~~~~~~~~~
-../Core/Src/DHT.c:12:3: note: in expansion of macro 'lineUp'
-   12 |   lineUp();
-      |   ^~~~~~
-../Core/Src/DHT.c:4:86: error: 'GPIO_PIN_SET' undeclared (first use in this function)
-    4 | #define lineUp()                HAL_GPIO_WritePin(sensor->DHT_Port, sensor->DHT_Pin, GPIO_PIN_SET)
-      |                                                                                      ^~~~~~~~~~~~
-../Core/Src/DHT.c:12:3: note: in expansion of macro 'lineUp'
-   12 |   lineUp();
-      |   ^~~~~~
-../Core/Src/DHT.c:4:86: note: each undeclared identifier is reported only once for each function it appears in
-    4 | #define lineUp()                HAL_GPIO_WritePin(sensor->DHT_Port, sensor->DHT_Pin, GPIO_PIN_SET)
-      |                                                                                      ^~~~~~~~~~~~
-../Core/Src/DHT.c:12:3: note: in expansion of macro 'lineUp'
-   12 |   lineUp();
-      |   ^~~~~~
-../Core/Src/DHT.c:15:18: error: request for member 'Pin' in something not a structure or union
-   15 |   GPIO_InitStruct.Pin = sensor->DHT_Pin;
-      |                  ^
-../Core/Src/DHT.c:16:18: error: request for member 'Mode' in something not a structure or union
-   16 |   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;   //Открытый сток
-      |                  ^
-../Core/Src/DHT.c:16:26: error: 'GPIO_MODE_OUTPUT_OD' undeclared (first use in this function); did you mean 'LL_GPIO_MODE_OUTPUT'?
-   16 |   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;   //Открытый сток
-      |                          ^~~~~~~~~~~~~~~~~~~
-      |                          LL_GPIO_MODE_OUTPUT
-../Core/Src/DHT.c:17:18: error: request for member 'Pull' in something not a structure or union
-   17 |   GPIO_InitStruct.Pull = sensor->pullUp;                //Подтяжка к питанию
-      |                  ^
-../Core/Src/DHT.c:19:18: error: request for member 'Speed' in something not a structure or union
-   19 |   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH; //Высокая скорость работы порта
-      |                  ^
-../Core/Src/DHT.c:19:27: error: 'GPIO_SPEED_FREQ_HIGH' undeclared (first use in this function); did you mean 'LL_GPIO_SPEED_FREQ_HIGH'?
-   19 |   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH; //Высокая скорость работы порта
-      |                           ^~~~~~~~~~~~~~~~~~~~
-      |                           LL_GPIO_SPEED_FREQ_HIGH
-../Core/Src/DHT.c:20:3: warning: implicit declaration of function 'HAL_GPIO_Init'; did you mean 'LL_GPIO_Init'? [-Wimplicit-function-declaration]
-   20 |   HAL_GPIO_Init(sensor->DHT_Port, &GPIO_InitStruct);
-      |   ^~~~~~~~~~~~~
-      |   LL_GPIO_Init
-../Core/Src/DHT.c: In function 'goToInput':
-../Core/Src/DHT.c:24:3: error: unknown type name 'GPIO_InitTypeDef'; did you mean 'LL_GPIO_InitTypeDef'?
-   24 |   GPIO_InitTypeDef GPIO_InitStruct = {0};
-      |   ^~~~~~~~~~~~~~~~
-      |   LL_GPIO_InitTypeDef
-../Core/Src/DHT.c:27:18: error: request for member 'Pin' in something not a structure or union
-   27 |   GPIO_InitStruct.Pin = sensor->DHT_Pin;
-      |                  ^
-../Core/Src/DHT.c:28:18: error: request for member 'Mode' in something not a structure or union
-   28 |   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-      |                  ^
-../Core/Src/DHT.c:28:26: error: 'GPIO_MODE_INPUT' undeclared (first use in this function); did you mean 'LL_GPIO_MODE_INPUT'?
-   28 |   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-      |                          ^~~~~~~~~~~~~~~
-      |                          LL_GPIO_MODE_INPUT
-../Core/Src/DHT.c:29:18: error: request for member 'Pull' in something not a structure or union
-   29 |   GPIO_InitStruct.Pull = sensor->pullUp;                //Подтяжка к питанию
-      |                  ^
-../Core/Src/DHT.c: In function 'DHT_getData':
-../Core/Src/DHT.c:47:14: warning: implicit declaration of function 'HAL_GetTick' [-Wimplicit-function-declaration]
-   47 |         if ((HAL_GetTick() - sensor->lastPollingTime < pollingInterval) && sensor->lastPollingTime != 0) {
-      |              ^~~~~~~~~~~
-../Core/Src/DHT.c:3:86: error: 'GPIO_PIN_RESET' undeclared (first use in this function)
-    3 | #define lineDown()              HAL_GPIO_WritePin(sensor->DHT_Port, sensor->DHT_Pin, GPIO_PIN_RESET)
-      |                                                                                      ^~~~~~~~~~~~~~
-../Core/Src/DHT.c:59:9: note: in expansion of macro 'lineDown'
-   59 |         lineDown();
-      |         ^~~~~~~~
-../Core/Src/DHT.c:6:33: warning: implicit declaration of function 'HAL_Delay'; did you mean 'LL_mDelay'? [-Wimplicit-function-declaration]
-    6 | #define Delay(d)                HAL_Delay(d)
-      |                                 ^~~~~~~~~
-../Core/Src/DHT.c:60:9: note: in expansion of macro 'Delay'
-   60 |         Delay(18);
-      |         ^~~~~
-../Core/Src/DHT.c:4:86: error: 'GPIO_PIN_SET' undeclared (first use in this function)
-    4 | #define lineUp()                HAL_GPIO_WritePin(sensor->DHT_Port, sensor->DHT_Pin, GPIO_PIN_SET)
-      |                                                                                      ^~~~~~~~~~~~
-../Core/Src/DHT.c:62:9: note: in expansion of macro 'lineUp'
-   62 |         lineUp();
-      |         ^~~~~~
-../Core/Src/DHT.c:5:34: warning: implicit declaration of function 'HAL_GPIO_ReadPin'; did you mean 'LL_GPIO_ReadReg'? [-Wimplicit-function-declaration]
-    5 | #define getLine()               (HAL_GPIO_ReadPin(sensor->DHT_Port, sensor->DHT_Pin) == GPIO_PIN_SET)
-      |                                  ^~~~~~~~~~~~~~~~
-../Core/Src/DHT.c:73:15: note: in expansion of macro 'getLine'
-   73 |         while(getLine()) {
-      |               ^~~~~~~
-make: *** [Core/Src/subdir.mk:46: Core/Src/DHT.o] Error 1
-"make -j12 all" terminated with exit code 2. Build might be incomplete.
+arm-none-eabi-size  STM32_uartPrintf.elf 
+   text	   data	    bss	    dec	    hex	filename
+  16068	    132	   1916	  18116	   46c4	STM32_uartPrintf.elf
+Finished building: default.size.stdout
+ 
 
-14:24:13 Build Failed. 16 errors, 5 warnings. (took 1s.121ms)
+15:18:58 Build Finished. 0 errors, 0 warnings. (took 750ms)
 

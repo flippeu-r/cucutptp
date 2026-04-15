@@ -2,42 +2,45 @@
 #define DHT_H_
 
 #include "main.h"
+#include "stm32l0xx_ll_gpio.h"
 
-/* Настройки */
-#define DHT_TIMEOUT 				10000	//Количество итераций, после которых функция вернёт пустые значения
-#define DHT_POLLING_CONTROL			1		//Включение проверки частоты опроса датчика
-#define DHT_POLLING_INTERVAL_DHT11	2000	//Интервал опроса DHT11 (0.5 Гц по даташиту). Можно поставить 1500, будет работать
-#define DHT_POLLING_INTERVAL_DHT22	1000	//Интервал опроса DHT22 (1 Гц по даташиту)
-#define DHT_IRQ_CONTROL						//Выключать прерывания во время обмена данных с датчиком
-/* Структура возвращаемых датчиком данных */
+/* Variable tick externe (définie dans stm32l0xx_it.c) */
+extern volatile uint32_t get_tick;
+
+/* Paramètres */
+#define DHT_TIMEOUT                 10000
+#define DHT_POLLING_CONTROL         1
+#define DHT_POLLING_INTERVAL_DHT11  2000
+#define DHT_POLLING_INTERVAL_DHT22  1000
+#define DHT_IRQ_CONTROL
+
+/* Structure des données retournées */
 typedef struct {
-	float hum;
-	float temp;
+    float hum;
+    float temp;
 } DHT_data;
 
-/* Тип используемого датчика */
+/* Type de capteur */
 typedef enum {
-	DHT11,
-	DHT22
+    DHT11,
+    DHT22
 } DHT_type;
 
-/* Структура объекта датчика */
+/* Structure du capteur */
 typedef struct {
-	GPIO_TypeDef *DHT_Port;	//Порт датчика (GPIOA, GPIOB, etc)
-	uint16_t DHT_Pin;		//Номер пина датчика (GPIO_PIN_0, GPIO_PIN_1, etc)
-	DHT_type type;			//Тип датчика (DHT11 или DHT22)
-	uint8_t pullUp;			//Нужна ли подтяжка линии данных к питанию (GPIO_NOPULL - нет, GPIO_PULLUP - да)
+    GPIO_TypeDef *DHT_Port;
+    uint32_t      DHT_Pin;    // LL utilise uint32_t (ex: LL_GPIO_PIN_0)
+    DHT_type      type;
+    uint32_t      pullUp;     // LL_GPIO_PULL_NO ou LL_GPIO_PULL_UP
 
-	//Контроль частоты опроса датчика. Значения не заполнять!
-	#if DHT_POLLING_CONTROL == 1
-	uint32_t lastPollingTime;//Время последнего опроса датчика
-	float lastTemp;			 //Последнее значение температуры
-	float lastHum;			 //Последнее значение влажности
-	#endif
+    #if DHT_POLLING_CONTROL == 1
+    uint32_t lastPollingTime;
+    float    lastTemp;
+    float    lastHum;
+    #endif
 } DHT_sensor;
 
+/* Prototype */
+DHT_data DHT_getData(DHT_sensor *sensor);
 
-/* Прототипы функций */
-DHT_data DHT_getData(DHT_sensor *sensor); //Получить данные с датчика
-
-#endif
+#endif /* DHT_H_ */
