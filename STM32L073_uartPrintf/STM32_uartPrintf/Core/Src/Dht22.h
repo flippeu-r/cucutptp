@@ -8,6 +8,7 @@
 
 #include "main.h"
 #include "stm32l0xx_ll_gpio.h"
+#include "stm32l0xx_ll_tim.h"
 #include <stdint.h>
 
 /* ---- Broche du capteur (PA0) ---- */
@@ -23,13 +24,13 @@ typedef struct {
 
 /* ---- Prototypes ---- */
 
-/** @brief Initialise la broche du DHT22 */
+/** @brief Initialise la broche du DHT22 et le timer */
 void DHT22_Init(void);
 
 /** @brief Lit les donnees du capteur DHT22 */
 DHT22_Data DHT22_Read(void);
 
-/** @brief Delai en microsecondes */
+/** @brief Delai en microsecondes via TIM2 */
 void DHT22_DelayUs(uint32_t us);
 
 #endif /* DHT22_H_ */

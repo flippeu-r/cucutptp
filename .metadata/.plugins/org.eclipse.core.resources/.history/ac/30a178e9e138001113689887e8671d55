@@ -1,0 +1,146 @@
+/**
+ * @file DHT.c
+ * @brief Librairie DHT22 pour STM32L073 avec LL
+ *
+ * Broche utilisée : PA0
+ * Protocole : 1-Wire DHT22
+ * Pas besoin de timer — utilise get_tick (SysTick ms) pour les délais longs
+ * et des boucles de comptage pour les délais courts (microsecondes)
+ */
+
+#include "DHT.h"
+#include <stdio.h>
+
+/* ===== Configuration ===== */
+#define DHT_PORT        GPIOA
+#define DHT_PIN         LL_GPIO_PIN_0
+
+/* Nombre max d'itérations pour les attentes courtes (microsecondes) */
+#define DHT_TIMEOUT     10000
+
+/* ===== Macros de contrôle de la broche ===== */
+/* Passe PA0 en sortie open-drain et tire vers le bas */
+#define DHT_LOW()  do { \
+    LL_GPIO_SetPinMode(DHT_PORT, DHT_PIN, LL_GPIO_MODE_OUTPUT); \
+    LL_GPIO_SetPinOutputType(DHT_PORT, DHT_PIN, LL_GPIO_OUTPUT_OPENDRAIN); \
+    LL_GPIO_ResetOutputPin(DHT_PORT, DHT_PIN); \
+} while(0)
+
+/* Passe PA0 en entrée avec pull-up */
+#define DHT_RELEASE() do { \
+    LL_GPIO_SetPinMode(DHT_PORT, DHT_PIN, LL_GPIO_MODE_INPUT); \
+    LL_GPIO_SetPinPull(DHT_PORT, DHT_PIN, LL_GPIO_PULL_UP); \
+} while(0)
+
+/* Lit l'état de la broche : 1 = haut, 0 = bas */
+#define DHT_READ()  LL_GPIO_IsInputPinSet(DHT_PORT, DHT_PIN)
+
+/* Attente en millisecondes via get_tick */
+#define DELAY_MS(d) do { \
+    uint32_t _s = get_tick; \
+    while ((get_tick - _s) < (uint32_t)(d)); \
+} while(0)
+
+/* ===== Fonction principale ===== */
+DHT_data DHT_getData(void) {
+    DHT_data data = {-128.0f, -128.0f};
+    uint8_t  rawData[5] = {0, 0, 0, 0, 0};
+    uint32_t timeout = 0;
+
+    printf("[DHT] Debut lecture...\r\n");
+
+    /* === ETAPE 1 : Signal de démarrage === */
+    /* On tire la ligne vers le bas pendant 18ms pour réveiller le capteur */
+    DHT_LOW();
+    DELAY_MS(18);
+
+    /* On relâche la ligne et on passe en entrée */
+    DHT_RELEASE();
+
+    /* === ETAPE 2 : Attente de la réponse du capteur === */
+    /* Le capteur tire la ligne bas pendant ~80µs puis haut pendant ~80µs */
+
+    /* Attente du front descendant (capteur tire la ligne bas) */
+    timeout = 0;
+    while (DHT_READ()) {
+        timeout++;
+        if (timeout > DHT_TIMEOUT) {
+            printf("[DHT] ERREUR : pas de reponse (front descendant)\r\n");
+            printf("[DHT] Verifiez le cablage PA0 et le +3.3V\r\n");
+            return data;
+        }
+    }
+    printf("[DHT] Front descendant OK\r\n");
+
+    /* Attente du front montant (capteur relâche la ligne) */
+    timeout = 0;
+    while (!DHT_READ()) {
+        timeout++;
+        if (timeout > DHT_TIMEOUT) {
+            printf("[DHT] ERREUR : ligne bloquee a 0 (front montant)\r\n");
+            printf("[DHT] Verifiez la resistance 10K entre OUT et 3.3V\r\n");
+            return data;
+        }
+    }
+    printf("[DHT] Front montant OK\r\n");
+
+    /* Attente que le capteur retombe avant d'envoyer les données */
+    timeout = 0;
+    while (DHT_READ()) {
+        timeout++;
+        if (timeout > DHT_TIMEOUT) {
+            printf("[DHT] ERREUR : timeout avant transmission\r\n");
+            return data;
+        }
+    }
+    printf("[DHT] Capteur pret, lecture des 40 bits...\r\n");
+
+    /* === ETAPE 3 : Lecture des 40 bits === */
+    /* Protocole DHT22 : chaque bit commence par un front bas ~50µs
+     * puis un front haut :
+     *   ~26µs = bit '0'
+     *   ~70µs = bit '1'
+     * On mesure la durée du front haut : si > durée du front bas → '1' */
+    for (uint8_t a = 0; a < 5; a++) {
+        for (uint8_t b = 7; b != 255; b--) {
+            uint32_t lowTime = 0, highTime = 0;
+
+            /* Attente fin du front bas */
+            while (!DHT_READ() && lowTime < 65535) lowTime++;
+
+            /* Mesure de la durée du front haut */
+            while (DHT_READ() && highTime < 65535) highTime++;
+
+            /* Si le front haut est plus long que le front bas : c'est un '1' */
+            if (highTime > lowTime) {
+                rawData[a] |= (1 << b);
+            }
+        }
+    }
+
+    /* === ETAPE 4 : Vérification du checksum === */
+    printf("[DHT] Donnees brutes : %02X %02X %02X %02X | checksum recu=%02X calcule=%02X\r\n",
+           rawData[0], rawData[1], rawData[2], rawData[3], rawData[4],
+           (uint8_t)(rawData[0] + rawData[1] + rawData[2] + rawData[3]));
+
+    if ((uint8_t)(rawData[0] + rawData[1] + rawData[2] + rawData[3]) == rawData[4]) {
+        /* === ETAPE 5 : Conversion des données === */
+        /* Humidité : octets 0 et 1, résolution 0.1% */
+        data.hum = (float)(((uint16_t)rawData[0] << 8) | rawData[1]) * 0.1f;
+
+        /* Température : octets 2 et 3, résolution 0.1°C */
+        /* Le bit 7 de rawData[2] indique une température négative */
+        if (!(rawData[2] & 0x80)) {
+            data.temp = (float)(((uint16_t)rawData[2] << 8) | rawData[3]) * 0.1f;
+        } else {
+            rawData[2] &= 0x7F; /* On retire le bit de signe */
+            data.temp = (float)(((uint16_t)rawData[2] << 8) | rawData[3]) * -0.1f;
+        }
+
+        printf("[DHT] OK : Temp=%.1f C  Hum=%.1f %%\r\n", data.temp, data.hum);
+    } else {
+        printf("[DHT] ERREUR : checksum incorrect, donnees corrompues\r\n");
+    }
+
+    return data;
+}

@@ -933,3 +933,6 @@ java.lang.IllegalStateException: Disconnected before saving. https://bugs.eclips
 		at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:4124)
 		at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3712)
 		... 19 more
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-04-15 17:51:54.594
+!MESSAGE Indexed 'STM32_uartPrintf' (33 sources, 125 headers) in 2,9 sec: 9 860 declarations; 46 523 references; 2 unresolved inclusions; 25 syntax errors; 146 unresolved names (0,26 %)
