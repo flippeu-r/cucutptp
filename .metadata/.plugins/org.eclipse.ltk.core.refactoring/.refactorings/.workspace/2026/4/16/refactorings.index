@@ -1,3 +1,5 @@
 1776066443919	Delete resource 'STM32_uartPrintf'
 1776091989000	Delete resource 'STM32L073_uartPrintf'
 1776092012401	Delete resource 'STM32_uartPrintf'
+1776269959470	Delete resource 'STM32_uartPrintf/Core/Src/Dht22.h'
+1776269963017	Delete resource 'STM32_uartPrintf/Core/Src/Dht22.c'

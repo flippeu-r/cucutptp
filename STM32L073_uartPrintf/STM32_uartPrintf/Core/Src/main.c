@@ -7,12 +7,11 @@
  *            Station météo avec capteur DHT22.
  */
 /* USER CODE END Header */
-
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
-#include "tim.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -20,7 +19,7 @@
 #include <retarget.h>
 #include <getch.h>
 #include "myGpioLib.h"
-#include "Dht22.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,118 +47,223 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+
+void delay (uint16_t time)
+{
+	/* change your code here for the delay in microseconds */
+	__HAL_TIM_SET_COUNTER(&htim6, 0);
+	while ((__HAL_TIM_GET_COUNTER(&htim6))<time);
+}
+
+
+
+
+uint8_t Rh_byte1, Rh_byte2, Temp_byte1, Temp_byte2;
+uint16_t SUM, RH, TEMP;
+
+float Temperature = 0;
+float Humidity = 0;
+uint8_t Presence = 0;
+
+void Set_Pin_Output (GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
+{
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
+	GPIO_InitStruct.Pin = GPIO_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
+}
+
+void Set_Pin_Input (GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
+{
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
+	GPIO_InitStruct.Pin = GPIO_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
+}
+
+/*********************************** DHT22 FUNCTIONS ****************************************/
+
+#define DHT22_PORT GPIOA
+#define DHT22_PIN GPIO_PIN_0
+
+void DHT22_Start (void)
+{
+	Set_Pin_Output(DHT22_PORT, DHT22_PIN); // set the pin as output
+	HAL_GPIO_WritePin (DHT22_PORT, DHT22_PIN, 0);   // pull the pin low
+	delay(1200);   // wait for > 1ms
+
+	HAL_GPIO_WritePin (DHT22_PORT, DHT22_PIN, 1);   // pull the pin high
+	delay (20);   // wait for 30us
+
+	Set_Pin_Input(DHT22_PORT, DHT22_PIN);   // set as input
+}
+
+uint8_t DHT22_Check_Response (void)
+{
+	Set_Pin_Input(DHT22_PORT, DHT22_PIN);   // set as input
+	uint8_t Response = 0;
+	delay (40);  // wait for 40us
+	if (!(HAL_GPIO_ReadPin (DHT22_PORT, DHT22_PIN))) // if the pin is low
+	{
+		delay (80);   // wait for 80us
+
+		if ((HAL_GPIO_ReadPin (DHT22_PORT, DHT22_PIN))) Response = 1;  // if the pin is high, response is ok
+		else Response = -1;
+	}
+
+	while ((HAL_GPIO_ReadPin (DHT22_PORT, DHT22_PIN)));   // wait for the pin to go low
+	return Response;
+}
+
+uint8_t DHT22_Read (void)
+{
+	uint8_t i,j;
+	for (j=0;j<8;j++)
+	{
+		while (!(HAL_GPIO_ReadPin (DHT22_PORT, DHT22_PIN)));   // wait for the pin to go high
+		delay (40);   // wait for 40 us
+
+		if (!(HAL_GPIO_ReadPin (DHT22_PORT, DHT22_PIN)))   // if the pin is low
+		{
+			i&= ~(1<<(7-j));   // write 0
+		}
+		else i|= (1<<(7-j));  // if the pin is high, write 1
+		while ((HAL_GPIO_ReadPin (DHT22_PORT, DHT22_PIN)));  // wait for the pin to go low
+	}
+
+	return i;
+}
+
 /* USER CODE END 0 */
 
+/**
+  * @brief  The application entry point.
+  * @retval int
+  */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
   /* USER CODE END 1 */
 
-  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SYSCFG);
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
+  /* MCU Configuration--------------------------------------------------------*/
+
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
 
   /* USER CODE BEGIN Init */
   /* USER CODE END Init */
 
+  /* Configure the system clock */
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
   /* USER CODE END SysInit */
 
+  /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   MX_TIM2_Init();
-
+  MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
   RetargetInit(USART2);
   getchInit();
   LL_USART_EnableIT_RXNE(USART2);
   LL_SYSTICK_EnableIT();
-  DHT22_Init();
+  HAL_TIM_Base_Start(&htim6);
 
   printf("\r\n=== SYS3046 - Station Meteo ===\r\n");
   printf("Commandes : 1=LED ON, 0=LED OFF, t=Tests, d=Duree 2s, b=Blink, c=Blink 5s, v=Tick, m=Meteo\r\n\r\n");
   /* USER CODE END 2 */
 
+  /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    if (kbhit())
-    {
-      char c = getch();
-      printf("Recu : %c\r\n", c);
 
-      if (c == '1') {
-        LED2_Write(1);
-        printf("LED2 allumee\r\n");
-      }
-      else if (c == '0') {
-        LED2_Write(0);
-        printf("LED2 eteinte\r\n");
-      }
-      else if (c == 't') {
-        GPIO_Test();
-      }
-      else if (c == 'd') {
-        printf("LED2 allumee 2 secondes...\r\n");
-        LED2_On_Duration(20);
-        printf("LED2 eteinte\r\n");
-      }
-      else if (c == 'v') {
-        printf("Tick actuel : %lu ms\r\n", get_tick);
-      }
-      else if (c == 'b') {
-        printf("Clignotement 1Hz (appuyez RESET pour arreter)\r\n");
-        LED2_Blink(5);
-      }
-      else if (c == 'c') {
-        printf("Clignotement 1Hz pendant 5s...\r\n");
-        LED2_Blink_Duration(5, 50);
-        printf("Fin clignotement\r\n");
-      }
-      else if (c == 'm') {
-        DHT22_Data d = DHT22_Read();
-        if (d.error) {
-          printf("Erreur : capteur non detecte !\r\n");
-        } else {
-          printf("Temperature : %.1f C\r\n", d.temperature);
-          printf("Humidite    : %.1f %%\r\n", d.humidity);
-        }
-      }
-    }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-  }
+
+
+	  DHT22_Start();
+	  Presence = DHT22_Check_Response();
+	  Rh_byte1 = DHT22_Read ();
+	  Rh_byte2 = DHT22_Read ();
+	  Temp_byte1 = DHT22_Read ();
+	  Temp_byte2 = DHT22_Read ();
+	  SUM = DHT22_Read();
+
+	  TEMP = ((Temp_byte1<<8)|Temp_byte2);
+	  RH = ((Rh_byte1<<8)|Rh_byte2);
+
+	  Temperature = (float) (TEMP/10.0);
+	  Humidity = (float) (RH/10.0);
+
+
+	  HAL_Delay(3000);
+
+
+	  printf("humidité : %f\r\n ", Humidity);
+	  printf("temperature : %f\r\n ", Temperature);
+ }
+
+
   /* USER CODE END 3 */
 }
 
+/**
+  * @brief System Clock Configuration
+  * @retval None
+  */
 void SystemClock_Config(void)
 {
   LL_FLASH_SetLatency(LL_FLASH_LATENCY_0);
-  while(LL_FLASH_GetLatency() != LL_FLASH_LATENCY_0) {}
-
+  while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_0)
+  {
+  }
   LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE1);
-  while (LL_PWR_IsActiveFlag_VOS() != 0) {}
-
+  while (LL_PWR_IsActiveFlag_VOS() != 0)
+  {
+  }
   LL_RCC_HSI_Enable();
-  while(LL_RCC_HSI_IsReady() != 1) {}
 
+   /* Wait till HSI is ready */
+  while(LL_RCC_HSI_IsReady() != 1)
+  {
+
+  }
   LL_RCC_HSI_SetCalibTrimming(16);
-  LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);   /* 16MHz pleine vitesse */
+  LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
   LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
   LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_HSI);
-  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI) {}
 
-  LL_Init1msTick(16000000);        /* SysTick toutes les 1ms a 16MHz */
+   /* Wait till System clock is ready */
+  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI)
+  {
+
+  }
   LL_SetSystemCoreClock(16000000);
+
+   /* Update the time base */
+  if (HAL_InitTick (TICK_INT_PRIORITY) != HAL_OK)
+  {
+    Error_Handler();
+  }
   LL_RCC_SetUSARTClockSource(LL_RCC_USART2_CLKSOURCE_PCLK1);
 }
 
 /* USER CODE BEGIN 4 */
 /* USER CODE END 4 */
 
+/**
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
@@ -167,11 +271,17 @@ void Error_Handler(void)
   while (1) {}
   /* USER CODE END Error_Handler_Debug */
 }
-
 #ifdef USE_FULL_ASSERT
+/**
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
   /* USER CODE END 6 */
 }
-#endif
+#endif /* USE_FULL_ASSERT */
