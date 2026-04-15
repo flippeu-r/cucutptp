@@ -88,28 +88,6 @@ void LED2_Blink(uint32_t half_period_100ms) {
     }
 }
 
-/* ---------- Etape 12 : Clignotement LED2 durée limitée ---------- */
-void LED2_Blink_Duration(uint32_t half_period_100ms, uint32_t duration_100ms) {
-    uint32_t half_ms     = half_period_100ms * 100;
-    uint32_t duration_ms = duration_100ms * 100;
-    uint32_t start_total = get_tick;
-    uint32_t start_half;
-
-    while ((get_tick - start_total) < duration_ms) {
-        LED2_Write(1);
-        start_half = get_tick;
-        while ((get_tick - start_half) < half_ms &&
-               (get_tick - start_total) < duration_ms);
-
-        LED2_Write(0);
-        start_half = get_tick;
-        while ((get_tick - start_half) < half_ms &&
-               (get_tick - start_total) < duration_ms);
-    }
-
-    LED2_Write(0); // s'assurer que la LED est éteinte à la fin
-}
-
 /* ---------- Etape 4 : Tests unitaires ---------- */
 void GPIO_Test(void) {
     uint8_t result;

@@ -7,4 +7,5 @@
 ../Core/Src/myGpioLib.c:60:9:B1_Read	8	static
 ../Core/Src/myGpioLib.c:66:6:LED2_On_Duration	24	static
 ../Core/Src/myGpioLib.c:76:6:LED2_Blink	24	static
-../Core/Src/myGpioLib.c:92:6:GPIO_Test	24	static
+../Core/Src/myGpioLib.c:92:6:LED2_Blink_Duration	32	static
+../Core/Src/myGpioLib.c:114:6:GPIO_Test	24	static

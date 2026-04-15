@@ -7,4 +7,5 @@
 ../Core/Src/myGpioLib.c:60:9:B1_Read	1
 ../Core/Src/myGpioLib.c:66:6:LED2_On_Duration	2
 ../Core/Src/myGpioLib.c:76:6:LED2_Blink	3
-../Core/Src/myGpioLib.c:92:6:GPIO_Test	9
+../Core/Src/myGpioLib.c:92:6:LED2_Blink_Duration	6
+../Core/Src/myGpioLib.c:114:6:GPIO_Test	9
