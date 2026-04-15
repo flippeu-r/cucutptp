@@ -679,3 +679,155 @@ arm-none-eabi-size  STM32_uartPrintf.elf
   16068	    132	   1916	  18116	   46c4	STM32_uartPrintf.elf
 Finished building: default.size.stdout
  
+15:29:41 **** Incremental Build of configuration Debug for project STM32_uartPrintf ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m0plus -std=gnu11 -g3 -DDEBUG -DSTM32L073xx -DUSE_FULL_LL_DRIVER -DHSE_VALUE=8000000 -DHSE_STARTUP_TIMEOUT=100 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DMSI_VALUE=2097000 -DHSI_VALUE=16000000 -DLSI_VALUE=37000 -DVDD_VALUE=3300 -DPREFETCH_ENABLE=0 -DINSTRUCTION_CACHE_ENABLE=1 -DDATA_CACHE_ENABLE=1 -c -I../Core/Inc -I../Drivers/STM32L0xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32L0xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "STM32_uartPrintf.elf" @"objects.list"   -mcpu=cortex-m0plus -T"C:\Users\pierr\STM32CubeIDE\workspace_2.0.0\STM32L073_uartPrintf\STM32_uartPrintf\STM32L073RZTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32_uartPrintf.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+C:/ST/STM32CubeIDE_2.0.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.100.202509120712/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/bin/ld.exe: warning: STM32_uartPrintf.elf has a LOAD segment with RWX permissions
+Finished building target: STM32_uartPrintf.elf
+ 
+arm-none-eabi-size  STM32_uartPrintf.elf 
+arm-none-eabi-objdump -h -S STM32_uartPrintf.elf  > "STM32_uartPrintf.list"
+   text	   data	    bss	    dec	    hex	filename
+  14052	    132	   1916	  16100	   3ee4	STM32_uartPrintf.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM32_uartPrintf.list
+ 
+15:29:47 **** Incremental Build of configuration Debug for project STM32_uartPrintf ****
+make -j12 all 
+arm-none-eabi-size  STM32_uartPrintf.elf 
+   text	   data	    bss	    dec	    hex	filename
+  14052	    132	   1916	  16100	   3ee4	STM32_uartPrintf.elf
+Finished building: default.size.stdout
+ 
+15:36:50 **** Incremental Build of configuration Debug for project STM32_uartPrintf ****
+make -j12 all 
+arm-none-eabi-size  STM32_uartPrintf.elf 
+   text	   data	    bss	    dec	    hex	filename
+  14052	    132	   1916	  16100	   3ee4	STM32_uartPrintf.elf
+Finished building: default.size.stdout
+ 
+15:36:54 **** Incremental Build of configuration Debug for project STM32_uartPrintf ****
+make -j12 all 
+arm-none-eabi-size  STM32_uartPrintf.elf 
+   text	   data	    bss	    dec	    hex	filename
+  14052	    132	   1916	  16100	   3ee4	STM32_uartPrintf.elf
+Finished building: default.size.stdout
+ 
+15:37:10 **** Incremental Build of configuration Debug for project STM32_uartPrintf ****
+make -j12 all 
+arm-none-eabi-size  STM32_uartPrintf.elf 
+   text	   data	    bss	    dec	    hex	filename
+  14052	    132	   1916	  16100	   3ee4	STM32_uartPrintf.elf
+Finished building: default.size.stdout
+ 
+15:59:52 **** Incremental Build of configuration Debug for project STM32_uartPrintf ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/gpio.c" -mcpu=cortex-m0plus -std=gnu11 -g3 -DDEBUG -DSTM32L073xx -DUSE_FULL_LL_DRIVER -DHSE_VALUE=8000000 -DHSE_STARTUP_TIMEOUT=100 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DMSI_VALUE=2097000 -DHSI_VALUE=16000000 -DLSI_VALUE=37000 -DVDD_VALUE=3300 -DPREFETCH_ENABLE=0 -DINSTRUCTION_CACHE_ENABLE=1 -DDATA_CACHE_ENABLE=1 -c -I../Core/Inc -I../Drivers/STM32L0xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32L0xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/gpio.d" -MT"Core/Src/gpio.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/gpio.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m0plus -std=gnu11 -g3 -DDEBUG -DSTM32L073xx -DUSE_FULL_LL_DRIVER -DHSE_VALUE=8000000 -DHSE_STARTUP_TIMEOUT=100 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DMSI_VALUE=2097000 -DHSI_VALUE=16000000 -DLSI_VALUE=37000 -DVDD_VALUE=3300 -DPREFETCH_ENABLE=0 -DINSTRUCTION_CACHE_ENABLE=1 -DDATA_CACHE_ENABLE=1 -c -I../Core/Inc -I../Drivers/STM32L0xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32L0xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/stm32l0xx_it.c" -mcpu=cortex-m0plus -std=gnu11 -g3 -DDEBUG -DSTM32L073xx -DUSE_FULL_LL_DRIVER -DHSE_VALUE=8000000 -DHSE_STARTUP_TIMEOUT=100 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DMSI_VALUE=2097000 -DHSI_VALUE=16000000 -DLSI_VALUE=37000 -DVDD_VALUE=3300 -DPREFETCH_ENABLE=0 -DINSTRUCTION_CACHE_ENABLE=1 -DDATA_CACHE_ENABLE=1 -c -I../Core/Inc -I../Drivers/STM32L0xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32L0xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32l0xx_it.d" -MT"Core/Src/stm32l0xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l0xx_it.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:110:3: warning: implicit declaration of function 'RetargetInit' [-Wimplicit-function-declaration]
+  110 |   RetargetInit(USART2);
+      |   ^~~~~~~~~~~~
+../Core/Src/main.c:111:3: warning: implicit declaration of function 'getchInit' [-Wimplicit-function-declaration]
+  111 |   getchInit();
+      |   ^~~~~~~~~
+../Core/Src/main.c:115:3: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
+  115 |   printf("\r\n=== SYS3046 - GPIO Library ===\r\n");
+      |   ^~~~~~
+../Core/Src/main.c:37:1: note: include '<stdio.h>' or provide a declaration of 'printf'
+   36 | #include "gpio.h"
+  +++ |+#include <stdio.h>
+   37 | 
+../Core/Src/main.c:115:3: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
+  115 |   printf("\r\n=== SYS3046 - GPIO Library ===\r\n");
+      |   ^~~~~~
+../Core/Src/main.c:115:3: note: include '<stdio.h>' or provide a declaration of 'printf'
+../Core/Src/main.c:124:9: warning: implicit declaration of function 'kbhit' [-Wimplicit-function-declaration]
+  124 |     if (kbhit())
+      |         ^~~~~
+../Core/Src/main.c:126:16: warning: implicit declaration of function 'getch' [-Wimplicit-function-declaration]
+  126 |       char c = getch();
+      |                ^~~~~
+arm-none-eabi-gcc -o "STM32_uartPrintf.elf" @"objects.list"   -mcpu=cortex-m0plus -T"C:\Users\pierr\STM32CubeIDE\workspace_2.0.0\STM32L073_uartPrintf\STM32_uartPrintf\STM32L073RZTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32_uartPrintf.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+C:/ST/STM32CubeIDE_2.0.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.100.202509120712/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/bin/ld.exe: warning: STM32_uartPrintf.elf has a LOAD segment with RWX permissions
+Finished building target: STM32_uartPrintf.elf
+ 
+arm-none-eabi-size  STM32_uartPrintf.elf 
+arm-none-eabi-objdump -h -S STM32_uartPrintf.elf  > "STM32_uartPrintf.list"
+   text	   data	    bss	    dec	    hex	filename
+  14116	    132	   1916	  16164	   3f24	STM32_uartPrintf.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM32_uartPrintf.list
+ 
+16:00:27 **** Incremental Build of configuration Debug for project STM32_uartPrintf ****
+make -j12 all 
+arm-none-eabi-size  STM32_uartPrintf.elf 
+   text	   data	    bss	    dec	    hex	filename
+  14116	    132	   1916	  16164	   3f24	STM32_uartPrintf.elf
+Finished building: default.size.stdout
+ 
+16:06:39 **** Incremental Build of configuration Debug for project STM32_uartPrintf ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m0plus -std=gnu11 -g3 -DDEBUG -DSTM32L073xx -DUSE_FULL_LL_DRIVER -DHSE_VALUE=8000000 -DHSE_STARTUP_TIMEOUT=100 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DMSI_VALUE=2097000 -DHSI_VALUE=16000000 -DLSI_VALUE=37000 -DVDD_VALUE=3300 -DPREFETCH_ENABLE=0 -DINSTRUCTION_CACHE_ENABLE=1 -DDATA_CACHE_ENABLE=1 -c -I../Core/Inc -I../Drivers/STM32L0xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32L0xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:110:3: warning: implicit declaration of function 'RetargetInit' [-Wimplicit-function-declaration]
+  110 |   RetargetInit(USART2);
+      |   ^~~~~~~~~~~~
+../Core/Src/main.c:111:3: warning: implicit declaration of function 'getchInit' [-Wimplicit-function-declaration]
+  111 |   getchInit();
+      |   ^~~~~~~~~
+../Core/Src/main.c:115:3: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
+  115 |   printf("\r\n=== SYS3046 - GPIO Library ===\r\n");
+      |   ^~~~~~
+../Core/Src/main.c:37:1: note: include '<stdio.h>' or provide a declaration of 'printf'
+   36 | #include "gpio.h"
+  +++ |+#include <stdio.h>
+   37 | 
+../Core/Src/main.c:115:3: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
+  115 |   printf("\r\n=== SYS3046 - GPIO Library ===\r\n");
+      |   ^~~~~~
+../Core/Src/main.c:115:3: note: include '<stdio.h>' or provide a declaration of 'printf'
+../Core/Src/main.c:124:9: warning: implicit declaration of function 'kbhit' [-Wimplicit-function-declaration]
+  124 |     if (kbhit())
+      |         ^~~~~
+../Core/Src/main.c:126:16: warning: implicit declaration of function 'getch' [-Wimplicit-function-declaration]
+  126 |       char c = getch();
+      |                ^~~~~
+arm-none-eabi-gcc -o "STM32_uartPrintf.elf" @"objects.list"   -mcpu=cortex-m0plus -T"C:\Users\pierr\STM32CubeIDE\workspace_2.0.0\STM32L073_uartPrintf\STM32_uartPrintf\STM32L073RZTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32_uartPrintf.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+C:/ST/STM32CubeIDE_2.0.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.100.202509120712/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/bin/ld.exe: warning: STM32_uartPrintf.elf has a LOAD segment with RWX permissions
+Finished building target: STM32_uartPrintf.elf
+ 
+arm-none-eabi-size  STM32_uartPrintf.elf 
+arm-none-eabi-objdump -h -S STM32_uartPrintf.elf  > "STM32_uartPrintf.list"
+   text	   data	    bss	    dec	    hex	filename
+  14112	    132	   1916	  16160	   3f20	STM32_uartPrintf.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM32_uartPrintf.list
+ 
+16:07:36 **** Incremental Build of configuration Debug for project STM32_uartPrintf ****
+make -j12 all 
+arm-none-eabi-size  STM32_uartPrintf.elf 
+   text	   data	    bss	    dec	    hex	filename
+  14112	    132	   1916	  16160	   3f20	STM32_uartPrintf.elf
+Finished building: default.size.stdout
+ 
+16:13:42 **** Incremental Build of configuration Debug for project STM32_uartPrintf ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/stm32l0xx_it.c" -mcpu=cortex-m0plus -std=gnu11 -g3 -DDEBUG -DSTM32L073xx -DUSE_FULL_LL_DRIVER -DHSE_VALUE=8000000 -DHSE_STARTUP_TIMEOUT=100 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DMSI_VALUE=2097000 -DHSI_VALUE=16000000 -DLSI_VALUE=37000 -DVDD_VALUE=3300 -DPREFETCH_ENABLE=0 -DINSTRUCTION_CACHE_ENABLE=1 -DDATA_CACHE_ENABLE=1 -c -I../Core/Inc -I../Drivers/STM32L0xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32L0xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32l0xx_it.d" -MT"Core/Src/stm32l0xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l0xx_it.o"
+arm-none-eabi-gcc -o "STM32_uartPrintf.elf" @"objects.list"   -mcpu=cortex-m0plus -T"C:\Users\pierr\STM32CubeIDE\workspace_2.0.0\STM32L073_uartPrintf\STM32_uartPrintf\STM32L073RZTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32_uartPrintf.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+C:/ST/STM32CubeIDE_2.0.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.100.202509120712/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/bin/ld.exe: warning: STM32_uartPrintf.elf has a LOAD segment with RWX permissions
+Finished building target: STM32_uartPrintf.elf
+ 
+arm-none-eabi-size  STM32_uartPrintf.elf 
+arm-none-eabi-objdump -h -S STM32_uartPrintf.elf  > "STM32_uartPrintf.list"
+   text	   data	    bss	    dec	    hex	filename
+  14128	    132	   1916	  16176	   3f30	STM32_uartPrintf.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM32_uartPrintf.list
+ 

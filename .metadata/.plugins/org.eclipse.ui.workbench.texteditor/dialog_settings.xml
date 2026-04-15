@@ -3,6 +3,15 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<item key="replaceBarOpen" value="false"/>
 	<list key="searchhistory">
+		<item value="LED2_Blink"/>
+		<item value="1=LED ON, 0=LED OFF"/>
+		<item value="g_rxCarUSART2"/>
 		<item value="return"/>
 	</list>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item key="selection" value="&#x09;printf(&quot;test valeur SysTick_Handler : % \n&quot;, get_tick);"/>
+		<list key="findhistory">
+			<item value="&#x09;printf(&quot;test valeur SysTick_Handler : % \n&quot;, get_tick);"/>
+		</list>
+	</section>
 </section>

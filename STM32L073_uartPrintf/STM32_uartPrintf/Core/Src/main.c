@@ -30,7 +30,6 @@
   ******************************************************************************
   */
 /* USER CODE END Header */
-
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "usart.h"
@@ -38,9 +37,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <stdio.h>
-#include <retarget.h>
-#include <getch.h>
+#include "myGpioLib.h"
+#include "DHT.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -104,11 +102,10 @@ int main(void)
   /* USER CODE BEGIN SysInit */
   /* (rien ici - on attend que les périphériques soient initialisés) */
   /* USER CODE END SysInit */
-//
+
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART2_UART_Init();
-
   /* USER CODE BEGIN 2 */
   RetargetInit(USART2);
   getchInit();
@@ -134,8 +131,8 @@ int main(void)
           if (d.temp == -128.0f) {
               printf("Erreur : capteur non detecte !\r\n");
           } else {
-              printf("Temperature : %.1f C\r\n", d.temp);
-              printf("Humidite    : %.1f %%\r\n", d.hum);
+              printf("Temperature : %.1f\n", d.temp);
+              printf("Humidite    : %.1f \n", d.hum);
           }
       }
     }
@@ -165,6 +162,7 @@ void SystemClock_Config(void)
    /* Wait till HSI is ready */
   while(LL_RCC_HSI_IsReady() != 1)
   {
+
   }
   LL_RCC_HSI_SetCalibTrimming(16);
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
@@ -175,9 +173,11 @@ void SystemClock_Config(void)
    /* Wait till System clock is ready */
   while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI)
   {
+
   }
 
   LL_Init1msTick(16000000);
+
   LL_SetSystemCoreClock(16000000);
   LL_RCC_SetUSARTClockSource(LL_RCC_USART2_CLKSOURCE_PCLK1);
 }
@@ -199,7 +199,6 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
-
 #ifdef USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number

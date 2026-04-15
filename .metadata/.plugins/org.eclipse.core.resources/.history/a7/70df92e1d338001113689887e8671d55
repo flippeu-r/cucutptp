@@ -2,18 +2,14 @@
 /**
  * @mainpage  SYS3046 course template
  *
- *            Project description...Project description...Project description...
- *            Project description...Project description...Project description...
- *            Project description...Project description...Project description...
- *				test projet description
- *            Project description...Project description...Project description...
- *
- *            Project description...Project description...Project description...
+ *            Implémentation de notre librairie MyGpioLib.c permettant de lire/écrire
+ *            l'état de différentes sorties et le clignotement d'une led.
  *
  */
 
 /* USER CODE BEGIN Includes */
-#include "sys3046Template.h"
+#include "myGpioLib.h"
+#include "DHT.h"
 /* USER CODE END Includes */
 
 
@@ -41,9 +37,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <stdio.h>
-#include <retarget.h>
-#include <getch.h>
+#include "myGpioLib.h"
+#include "DHT.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -63,6 +58,9 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+
+extern volatile uint32_t get_tick;
+DHT_sensor dht = {GPIOA, LL_GPIO_PIN_0, DHT22, LL_GPIO_PULL_NO};
 
 /* USER CODE END PV */
 
@@ -102,7 +100,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  /* (rien ici - on attend que les périphériques soient initialisés) */
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -112,16 +110,32 @@ int main(void)
   RetargetInit(USART2);
   getchInit();
   LL_USART_EnableIT_RXNE(USART2);
+  LL_SYSTICK_EnableIT();
+
+  printf("\r\n=== SYS3046 - GPIO Library ===\r\n");
+
+  printf("Commandes : 1=LED ON, 0=LED OFF, t=Tests, d=Duree 2s\r\n\r\n");
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	if (kbhit()) //if one char received on USART2
-	{
-	  printf("Recu:%c\r\n", getch()); //print it
-}
+    if (kbhit())
+    {
+      char c = getch();
+      printf("Recu : %c\r\n", c);
+
+      if (c == 'm') {
+          DHT_data d = DHT_getData(&dht);
+          if (d.temp == -128.0f) {
+              printf("Erreur : capteur non detecte !\r\n");
+          } else {
+              printf("Temperature : %.1f C\r\n", d.temp);
+              printf("Humidite    : %.1f %%\r\n", d.hum);
+          }
+      }
+    }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -179,15 +193,12 @@ void SystemClock_Config(void)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
   while (1)
   {
   }
   /* USER CODE END Error_Handler_Debug */
 }
-
-
 #ifdef USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
@@ -199,8 +210,6 @@ void Error_Handler(void)
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
