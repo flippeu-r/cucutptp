@@ -12,7 +12,6 @@
 #include "main.h"
 #include "usart.h"
 #include "gpio.h"
-#include "stdio.h"
 
 #include "Dht22.h"
 /* Private includes ----------------------------------------------------------*/
@@ -91,7 +90,6 @@ int main(void)
   getchInit();
   LL_USART_EnableIT_RXNE(USART2);
   LL_SYSTICK_EnableIT();
-  DHT22_Init();
 
   printf("\r\n=== SYS3046 - GPIO Library ===\r\n");
 

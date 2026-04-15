@@ -1,6 +1,12 @@
 /**
  * @file DHT22.h
- * @brief Header lecture capteur DHT22 pour STM32L073 avec LL
+ * @brief Librairie DHT22 pour STM32L073 avec LL - SYS3046
+ * @author Binôme XX
+ * @date 2024
+ *
+ * Utilise uniquement les fonctions LL GPIO et une boucle de délai
+ * en microsecondes basée sur les cycles CPU (16MHz).
+ * Pas de timer externe nécessaire.
  */
 
 #ifndef DHT22_H_
@@ -8,32 +14,39 @@
 
 #include "main.h"
 #include "stm32l0xx_ll_gpio.h"
-#include "core_cm0plus.h"  /* Pour DWT */
+#include <stdint.h>
 
-/* ---- Configuration : adaptez ces 2 lignes selon votre câblage ---- */
-#define DHT22_PORT   GPIOA
-#define DHT22_PIN    LL_GPIO_PIN_0   /* PA0 */
+/* ---- Fréquence CPU (16MHz) pour le délai en µs ---- */
+#define CPU_FREQ_MHZ    16
 
-/* ---- Codes de retour ---- */
-typedef enum {
-    DHT22_OK              = 0,  /* Lecture réussie */
-    DHT22_ERROR_NO_RESPONSE,    /* Capteur absent ou mal câblé */
-    DHT22_ERROR_TIMEOUT,        /* Timeout pendant la lecture */
-    DHT22_ERROR_CHECKSUM        /* Données corrompues */
-} DHT22_Status;
+/* ---- Broche du capteur ---- */
+#define DHT22_PORT      GPIOA
+#define DHT22_PIN       LL_GPIO_PIN_0
 
-/* ---- Structure des données ---- */
+/* ---- Structure des données retournées ---- */
 typedef struct {
     float temperature;  /* Température en °C */
     float humidity;     /* Humidité en % */
+    uint8_t error;      /* 0 = OK, 1 = erreur */
 } DHT22_Data;
 
-/* ---- Prototype ---- */
+/* ---- Prototypes ---- */
+
 /**
- * @brief Lit la température et l'humidité du capteur DHT22
- * @param data Pointeur vers la structure de données à remplir
- * @return DHT22_OK si succès, sinon code d'erreur
+ * @brief Initialise la broche du DHT22 en sortie open-drain
  */
-DHT22_Status DHT22_Read(DHT22_Data *data);
+void DHT22_Init(void);
+
+/**
+ * @brief Lit les données du capteur DHT22
+ * @return Structure DHT22_Data avec température, humidité et code erreur
+ */
+DHT22_Data DHT22_Read(void);
+
+/**
+ * @brief Délai en microsecondes (basé sur boucle CPU à 16MHz)
+ * @param us Durée en microsecondes
+ */
+void DHT22_DelayUs(uint32_t us);
 
 #endif /* DHT22_H_ */

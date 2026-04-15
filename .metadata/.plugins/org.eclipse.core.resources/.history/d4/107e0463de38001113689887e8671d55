@@ -12,7 +12,6 @@
 #include "main.h"
 #include "usart.h"
 #include "gpio.h"
-#include "stdio.h"
 
 #include "Dht22.h"
 /* Private includes ----------------------------------------------------------*/

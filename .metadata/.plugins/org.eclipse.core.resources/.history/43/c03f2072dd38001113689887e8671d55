@@ -12,7 +12,6 @@
 #include "main.h"
 #include "usart.h"
 #include "gpio.h"
-#include "stdio.h"
 
 #include "Dht22.h"
 /* Private includes ----------------------------------------------------------*/
@@ -41,6 +40,7 @@
 /* USER CODE BEGIN PV */
 
 extern volatile uint32_t get_tick;
+DHT_sensor dht = {GPIOA, LL_GPIO_PIN_0, DHT22, LL_GPIO_PULL_NO};
 
 /* USER CODE END PV */
 
@@ -91,7 +91,6 @@ int main(void)
   getchInit();
   LL_USART_EnableIT_RXNE(USART2);
   LL_SYSTICK_EnableIT();
-  DHT22_Init();
 
   printf("\r\n=== SYS3046 - GPIO Library ===\r\n");
 
@@ -107,14 +106,18 @@ int main(void)
       char c = getch();
       printf("Recu : %c\r\n", c);
 
-      else if (c == 'm') {
-          DHT22_Data d = DHT22_Read();
-          if (d.error) {
-              printf("Erreur : capteur non detecte !\r\n");
-          } else {
-              printf("Temperature : %.1f C\r\n", d.temperature);
-              printf("Humidite    : %.1f %%\r\n", d.humidity);
-          }
+      if (c == 'm') {
+          DHT22_Data d;
+          DHT22_Status status = DHT22_Read(&d);
+
+          if (status == DHT22_OK)
+              printf("Temp : %.1f C  Hum : %.1f %%\r\n", d.temperature, d.humidity);
+          else if (status == DHT22_ERROR_NO_RESPONSE)
+              printf("Erreur : capteur absent ou mal cable\r\n");
+          else if (status == DHT22_ERROR_CHECKSUM)
+              printf("Erreur : donnees corrompues\r\n");
+          else
+              printf("Erreur : timeout\r\n");
       }
     }
     /* USER CODE END WHILE */
