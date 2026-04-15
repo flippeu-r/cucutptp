@@ -1,5 +1,4 @@
-Core/Src/main.o: ../Core/Src/main.c ../Core/Src/myGpioLib.h \
- ../Core/Inc/main.h \
+Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_crs.h \
  ../Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l0xx.h \
  ../Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l073xx.h \
@@ -20,8 +19,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Src/myGpioLib.h \
  ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_usart.h \
  ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_gpio.h \
  ../Core/Inc/usart.h ../Core/Inc/main.h ../Core/Inc/gpio.h \
- ../Core/Src/Dht22.h ../Core/Src/DHT22.h
-../Core/Src/myGpioLib.h:
+ ../Core/Src/myGpioLib.h ../Core/Src/Dht22.h ../Core/Src/DHT22.h
 ../Core/Inc/main.h:
 ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_crs.h:
 ../Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l0xx.h:
@@ -45,5 +43,6 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Src/myGpioLib.h \
 ../Core/Inc/usart.h:
 ../Core/Inc/main.h:
 ../Core/Inc/gpio.h:
+../Core/Src/myGpioLib.h:
 ../Core/Src/Dht22.h:
 ../Core/Src/DHT22.h:

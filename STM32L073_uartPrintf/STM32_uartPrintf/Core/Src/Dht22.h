@@ -1,12 +1,6 @@
 /**
- * @file DHT22.h
+ * @file Dht22.h
  * @brief Librairie DHT22 pour STM32L073 avec LL - SYS3046
- * @author Binôme XX
- * @date 2024
- *
- * Utilise uniquement les fonctions LL GPIO et une boucle de délai
- * en microsecondes basée sur les cycles CPU (16MHz).
- * Pas de timer externe nécessaire.
  */
 
 #ifndef DHT22_H_
@@ -16,37 +10,26 @@
 #include "stm32l0xx_ll_gpio.h"
 #include <stdint.h>
 
-/* ---- Fréquence CPU (16MHz) pour le délai en µs ---- */
-#define CPU_FREQ_MHZ    16
-
-/* ---- Broche du capteur ---- */
+/* ---- Broche du capteur (PA0) ---- */
 #define DHT22_PORT      GPIOA
 #define DHT22_PIN       LL_GPIO_PIN_0
 
-/* ---- Structure des données retournées ---- */
+/* ---- Structure des donnees retournees ---- */
 typedef struct {
-    float temperature;  /* Température en °C */
-    float humidity;     /* Humidité en % */
+    float temperature;  /* Temperature en degres C */
+    float humidity;     /* Humidite en % */
     uint8_t error;      /* 0 = OK, 1 = erreur */
 } DHT22_Data;
 
 /* ---- Prototypes ---- */
 
-/**
- * @brief Initialise la broche du DHT22 en sortie open-drain
- */
+/** @brief Initialise la broche du DHT22 */
 void DHT22_Init(void);
 
-/**
- * @brief Lit les données du capteur DHT22
- * @return Structure DHT22_Data avec température, humidité et code erreur
- */
+/** @brief Lit les donnees du capteur DHT22 */
 DHT22_Data DHT22_Read(void);
 
-/**
- * @brief Délai en microsecondes (basé sur boucle CPU à 16MHz)
- * @param us Durée en microsecondes
- */
+/** @brief Delai en microsecondes */
 void DHT22_DelayUs(uint32_t us);
 
 #endif /* DHT22_H_ */

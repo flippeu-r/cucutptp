@@ -104,7 +104,7 @@ DHT22_Data DHT22_Read(void) {
     printf("[DHT22] Front montant OK\r\n");
 
     /* Attente front descendant avant donnees (~80us) */
-    timeout = 20000;
+    timeout = 10000;
     while (PIN_READ()) {
         timeout--;
         if (timeout == 0) {

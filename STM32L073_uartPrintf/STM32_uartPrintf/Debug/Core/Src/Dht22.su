@@ -1,8 +1,9 @@
 ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_gpio.h:762:26:LL_GPIO_IsInputPinSet	16	static
 ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_gpio.h:843:22:LL_GPIO_SetOutputPin	16	static
 ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_gpio.h:872:22:LL_GPIO_ResetOutputPin	16	static
-../Core/Src/Dht22.c:28:6:DHT22_DelayUs	24	static
-../Core/Src/Dht22.c:36:13:setOutput	32	static
-../Core/Src/Dht22.c:47:13:setInput	32	static
-../Core/Src/Dht22.c:56:6:DHT22_Init	8	static
+../Core/Src/Dht22.c:25:13:delayMs	24	static
+../Core/Src/Dht22.c:32:6:DHT22_DelayUs	24	static
+../Core/Src/Dht22.c:38:13:setOutput	32	static
+../Core/Src/Dht22.c:49:13:setInput	32	static
+../Core/Src/Dht22.c:58:6:DHT22_Init	8	static
 ../Core/Src/Dht22.c:66:12:DHT22_Read	80	static
