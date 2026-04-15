@@ -665,3 +665,17 @@ arm-none-eabi-size  STM32_uartPrintf.elf
   16068	    132	   1916	  18116	   46c4	STM32_uartPrintf.elf
 Finished building: default.size.stdout
  
+15:21:50 **** Incremental Build of configuration Debug for project STM32_uartPrintf ****
+make -j12 all 
+arm-none-eabi-size  STM32_uartPrintf.elf 
+   text	   data	    bss	    dec	    hex	filename
+  16068	    132	   1916	  18116	   46c4	STM32_uartPrintf.elf
+Finished building: default.size.stdout
+ 
+15:21:56 **** Incremental Build of configuration Debug for project STM32_uartPrintf ****
+make -j12 all 
+arm-none-eabi-size  STM32_uartPrintf.elf 
+   text	   data	    bss	    dec	    hex	filename
+  16068	    132	   1916	  18116	   46c4	STM32_uartPrintf.elf
+Finished building: default.size.stdout
+ 

@@ -129,7 +129,36 @@ int main(void)
       char c = getch();
       printf("Recu : %c\r\n", c);
 
-      if (c == 'm') {
+      if (c == '1') {
+        LED2_Write(1);
+        printf("LED2 allumee\r\n");
+      }
+      else if (c == '0') {
+        LED2_Write(0);
+        printf("LED2 eteinte\r\n");
+      }
+      else if (c == 't') {
+        GPIO_Test();
+      }
+      else if (c == 'd') {
+          printf("LED2 allumee 2 secondes...\r\n");
+          LED2_On_Duration(20);
+          printf("LED2 eteinte\r\n");
+      }
+      else if (c == 'v') {
+          printf("Tick actuel : %lu ms\r\n", get_tick);
+      }
+      else if (c == 'b') {
+          printf("Clignotement 1Hz (appuyez RESET pour arreter)\r\n");
+          LED2_Blink(5);  // 5 x 100ms = 500ms de demi-periode = 1Hz
+      }
+
+      else if (c == 'c') {
+          printf("Clignotement 1Hz pendant 5s...\r\n");
+          LED2_Blink_Duration(5, 50);  // 500ms demi-periode, 5s total
+          printf("Fin clignotement\r\n");
+      }
+      else if (c == 'm') {
           DHT_data d = DHT_getData(&dht);
           if (d.temp == -128.0f) {
               printf("Erreur : capteur non detecte !\r\n");
