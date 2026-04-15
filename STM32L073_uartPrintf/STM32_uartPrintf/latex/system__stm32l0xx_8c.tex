@@ -1,0 +1,56 @@
+\doxysection{Core/\+\+Src/\+system\+\_\+stm32l0xx.c File Reference}
+\hypertarget{system__stm32l0xx_8c}{}\label{system__stm32l0xx_8c}\index{Core/Src/system\_stm32l0xx.c@{Core/Src/system\_stm32l0xx.c}}
+
+
+CMSIS Cortex-\/\+M0+ Device Peripheral Access Layer System Source File.  
+
+
+{\ttfamily \+\#include "{}stm32l0xx.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{group___s_t_m32_l0xx___system___private___includes_gaeafcff4f57440c60e64812dddd13e7cb}{HSE\+\_\+\+VALUE}}~((uint32\+\_\+t)8000000U)
+\item 
+\+\#define \doxymbox{\hyperlink{group___s_t_m32_l0xx___system___private___includes_ga90e2a73d7fe4a7425c6e31fef5ce7263}{MSI\+\_\+\+VALUE}}~((uint32\+\_\+t)2097152U)
+\item 
+\+\#define \doxymbox{\hyperlink{group___s_t_m32_l0xx___system___private___includes_gaaa8c76e274d0f6dd2cefb5d0b17fbc37}{HSI\+\_\+\+VALUE}}~((uint32\+\_\+t)16000000U)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{group___s_t_m32_l0xx___system___private___functions_ga93f514700ccf00d08dbdcff7f1224eb2}{System\+Init}} (void)
+\begin{DoxyCompactList}\small\item\em Setup the microcontroller system. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{group___s_t_m32_l0xx___system___private___functions_gae0c36a9591fe6e9c45ecb21a794f0f0f}{System\+Core\+Clock\+Update}} (void)
+\begin{DoxyCompactList}\small\item\em Update System\+Core\+Clock variable according to Clock Register Values. The System\+Core\+Clock variable contains the core clock (HCLK), it can be used by the user application to setup the Sys\+Tick timer or configure other parameters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{group___s_t_m32_l0xx___system___private___variables_gaa3cd3e43291e81e795d642b79b6088e6}{System\+Core\+Clock}} = 2097152U
+\item 
+const uint8\+\_\+t \doxymbox{\hyperlink{group___s_t_m32_l0xx___system___private___variables_ga6e1d9cd666f0eacbfde31e9932a93466}{AHBPresc\+Table}} \+[16]\+ = \{0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 1U, 2U, 3U, 4U, 6U, 7U, 8U, 9U\}
+\item 
+const uint8\+\_\+t \doxymbox{\hyperlink{group___s_t_m32_l0xx___system___private___variables_ga5b4f8b768465842cf854a8f993b375e9}{APBPresc\+Table}} \+[8]\+ = \{0U, 0U, 0U, 0U, 1U, 2U, 3U, 4U\}
+\item 
+const uint8\+\_\+t \doxymbox{\hyperlink{group___s_t_m32_l0xx___system___private___variables_gadab2d89c9fe6053f421278d154dcfb9d}{PLLMul\+Table}} \+[9]\+ = \{3U, 4U, 6U, 8U, 12U, 16U, 24U, 32U, 48U\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+CMSIS Cortex-\/\+M0+ Device Peripheral Access Layer System Source File. 
+
+\begin{DoxyAuthor}{Author}
+MCD Application Team 
+\end{DoxyAuthor}
+This file provides two functions and one global variable to be called from user application:\+
+\begin{DoxyItemize}
+\item \doxylink{group___s_t_m32_l0xx___system___private___functions_ga93f514700ccf00d08dbdcff7f1224eb2}{System\+Init()}:\+ This function is called at startup just after reset and before branch to main program. This call is made inside the "{}startup\+\_\+stm32l0xx.\+s"{} file.
+\item System\+Core\+Clock variable:\+ Contains the core clock (HCLK), it can be used by the user application to setup the Sys\+Tick timer or configure other parameters.
+\item \doxylink{group___s_t_m32_l0xx___system___private___functions_gae0c36a9591fe6e9c45ecb21a794f0f0f}{System\+Core\+Clock\+Update()}:\+ Updates the variable System\+Core\+Clock and must be called whenever the core clock is changed during program execution.
+\end{DoxyItemize}
+
+\begin{DoxyAttention}{Attention}
+
+\end{DoxyAttention}
+\doxysubsubsection*{\begin{center}\copyright{} Copyright(c) 2016 STMicroelectronics. All rights reserved.\end{center} }
+
+This software component is licensed by ST under BSD 3-\/Clause license, the "{}\+License"{}; You may not use this file except in compliance with the License. You may obtain a copy of the License at:\+ opensource.\+org/\+licenses/\+\+BSD-\/3-\/\+Clause 

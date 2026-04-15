@@ -1,19 +1,8 @@
 /**
  * @file myGpioLib.c
  * @brief Implémentation de la librairie GPIO - SYS3046
- * @author Binôme XX
- * @date 2024
  *
  *
- *@mainpage  SYS3046 course template
- *
- *            le caca
- *            Project description...Project description...Project description...
- *            Project description...Project description...Project description...
- *
- *            Project description...Project description...Project description...
- *
- *            Project description...Project description...Project description...
  *
  */
 
@@ -151,6 +140,20 @@ void GPIO_Test(void) {
     result = GPIOA_ReadOutput(5);
     printf("PA5 Toggle      -> ReadOutput = %d : %s\r\n", result, (result==1)?"OK":"Echec");
     GPIOA_WritePin(5, 0); // on remet à 0 après le test
+
+    /* Etape 10 : toggle */
+    printf("LED2 allumee 2 secondes...\r\n");
+    LED2_On_Duration(20);
+    printf("LED2 eteinte\r\n");
+
+    /* Etape 12 : toggle */
+    printf("Clignotement 1Hz pendant 5s...\r\n");
+        LED2_Blink_Duration(5, 50);  // 500ms demi-periode, 5s total
+        printf("Fin clignotement\r\n");
+
+    /* Etape 11 : toggle */
+    printf("Clignotement 1Hz (appuyez RESET pour arreter)\r\n");
+    LED2_Blink(5);  // 5 x 100ms = 500ms de demi-periode = 1Hz
 
     printf("=== FIN DES TESTS ===\r\n\r\n");
 }

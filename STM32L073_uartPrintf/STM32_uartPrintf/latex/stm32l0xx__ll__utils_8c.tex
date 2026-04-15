@@ -1,0 +1,100 @@
+\doxysection{Drivers/\+\+STM32\+L0xx\+\_\+\+HAL\+\_\+\+Driver/\+\+Src/\+stm32l0xx\+\_\+ll\+\_\+utils.c File Reference}
+\hypertarget{stm32l0xx__ll__utils_8c}{}\label{stm32l0xx__ll__utils_8c}\index{Drivers/STM32L0xx\_HAL\_Driver/Src/stm32l0xx\_ll\_utils.c@{Drivers/STM32L0xx\_HAL\_Driver/Src/stm32l0xx\_ll\_utils.c}}
+
+
+UTILS LL module driver.  
+
+
+{\ttfamily \+\#include "{}stm32l0xx\+\_\+ll\+\_\+rcc.\+h"{}}\newline
+{\ttfamily \+\#include "{}stm32l0xx\+\_\+ll\+\_\+utils.\+h"{}}\newline
+{\ttfamily \+\#include "{}stm32l0xx\+\_\+ll\+\_\+system.\+h"{}}\newline
+{\ttfamily \+\#include "{}stm32l0xx\+\_\+ll\+\_\+pwr.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{stm32l0xx__ll__utils_8c_a631dea7b230e600555f979c62af1de21}{assert\+\_\+param}}(expr)
+\item 
+\+\#define \doxymbox{\hyperlink{group___u_t_i_l_s___l_l___private___constants_ga9e701f7e48005eafdfc79a32781caf07}{UTILS\+\_\+\+MAX\+\_\+\+FREQUENCY\+\_\+\+SCALE1}}~(32000000U)
+\item 
+\+\#define \doxymbox{\hyperlink{group___u_t_i_l_s___l_l___private___constants_gafc90436876554749a18b195f784d44e7}{UTILS\+\_\+\+MAX\+\_\+\+FREQUENCY\+\_\+\+SCALE2}}~(16000000U)
+\item 
+\+\#define \doxymbox{\hyperlink{group___u_t_i_l_s___l_l___private___constants_ga0f2d339370524495deb9e6fe8a76d352}{UTILS\+\_\+\+MAX\+\_\+\+FREQUENCY\+\_\+\+SCALE3}}~(4194304U)
+\item 
+\+\#define \doxymbox{\hyperlink{group___u_t_i_l_s___l_l___private___constants_ga93c052918833755a592c112bc04a63d3}{UTILS\+\_\+\+PLLVCO\+\_\+\+OUTPUT\+\_\+\+SCALE1}}~(96000000U)
+\item 
+\+\#define \doxymbox{\hyperlink{group___u_t_i_l_s___l_l___private___constants_ga9b7fde75e37edd5c7f06f81c4c16d64c}{UTILS\+\_\+\+PLLVCO\+\_\+\+OUTPUT\+\_\+\+SCALE2}}~(48000000U)
+\item 
+\+\#define \doxymbox{\hyperlink{group___u_t_i_l_s___l_l___private___constants_ga1e69f4388685b5041961f77072fdcbe0}{UTILS\+\_\+\+PLLVCO\+\_\+\+OUTPUT\+\_\+\+SCALE3}}~(24000000U)
+\item 
+\+\#define \doxymbox{\hyperlink{group___u_t_i_l_s___l_l___private___constants_ga7bc514193367ab0d598fe4c3bedd6066}{UTILS\+\_\+\+HSE\+\_\+\+FREQUENCY\+\_\+\+MIN}}~(1000000U)
+\item 
+\+\#define \doxymbox{\hyperlink{group___u_t_i_l_s___l_l___private___constants_gae3407ef407af85f72bbba3db982a1826}{UTILS\+\_\+\+HSE\+\_\+\+FREQUENCY\+\_\+\+MAX}}~(24000000U)
+\item 
+\+\#define \doxymbox{\hyperlink{group___u_t_i_l_s___l_l___private___constants_ga9e087ed402897504c6d5375c745b627a}{UTILS\+\_\+\+SCALE1\+\_\+\+LATENCY1\+\_\+\+FREQ}}~(16000000U)
+\item 
+\+\#define \doxymbox{\hyperlink{group___u_t_i_l_s___l_l___private___constants_gae7a1078f03761d050f427c815de08587}{UTILS\+\_\+\+SCALE2\+\_\+\+LATENCY1\+\_\+\+FREQ}}~(8000000U)
+\item 
+\+\#define \doxymbox{\hyperlink{group___u_t_i_l_s___l_l___private___constants_ga830dc82c57beed1c2deaa7a0d2433079}{UTILS\+\_\+\+SCALE3\+\_\+\+LATENCY1\+\_\+\+FREQ}}~(2000000U)
+\item 
+\+\#define \doxymbox{\hyperlink{group___u_t_i_l_s___l_l___private___macros_ga7ec625ff40cf96c750c2658bb1edc8af}{IS\+\_\+\+LL\+\_\+\+UTILS\+\_\+\+SYSCLK\+\_\+\+DIV}}(\+\_\+\+\_\+\+VALUE\+\_\+\+\_\+)
+\item 
+\+\#define \doxymbox{\hyperlink{group___u_t_i_l_s___l_l___private___macros_gae6050c11fe88d273e3af9bfc4c55e016}{IS\+\_\+\+LL\+\_\+\+UTILS\+\_\+\+APB1\+\_\+\+DIV}}(\+\_\+\+\_\+\+VALUE\+\_\+\+\_\+)
+\item 
+\+\#define \doxymbox{\hyperlink{group___u_t_i_l_s___l_l___private___macros_gaa8e8df04206b96c1a43e6c8490c6d886}{IS\+\_\+\+LL\+\_\+\+UTILS\+\_\+\+APB2\+\_\+\+DIV}}(\+\_\+\+\_\+\+VALUE\+\_\+\+\_\+)
+\item 
+\+\#define \doxymbox{\hyperlink{group___u_t_i_l_s___l_l___private___macros_ga5043a539f543f86fcae20cd891805dfd}{IS\+\_\+\+LL\+\_\+\+UTILS\+\_\+\+PLLMUL\+\_\+\+VALUE}}(\+\_\+\+\_\+\+VALUE\+\_\+\+\_\+)
+\item 
+\+\#define \doxymbox{\hyperlink{group___u_t_i_l_s___l_l___private___macros_ga310e8f14dff596dbd3da30bef51f89cb}{IS\+\_\+\+LL\+\_\+\+UTILS\+\_\+\+PLLDIV\+\_\+\+VALUE}}(\+\_\+\+\_\+\+VALUE\+\_\+\+\_\+)
+\item 
+\+\#define \doxymbox{\hyperlink{group___u_t_i_l_s___l_l___private___macros_gae2da9f27ac22cd72e6bdead77bba5fe6}{IS\+\_\+\+LL\+\_\+\+UTILS\+\_\+\+PLLVCO\+\_\+\+OUTPUT}}(\+\_\+\+\_\+\+VALUE\+\_\+\+\_\+)
+\item 
+\+\#define \doxymbox{\hyperlink{group___u_t_i_l_s___l_l___private___macros_gafdc929d67ee197e1e27a26d5474bca63}{IS\+\_\+\+LL\+\_\+\+UTILS\+\_\+\+PLL\+\_\+\+FREQUENCY}}(\+\_\+\+\_\+\+VALUE\+\_\+\+\_\+)
+\item 
+\+\#define \doxymbox{\hyperlink{group___u_t_i_l_s___l_l___private___macros_gaf41394221ce505e0bc7c9ef54e0b2d61}{IS\+\_\+\+LL\+\_\+\+UTILS\+\_\+\+HSE\+\_\+\+BYPASS}}(\+\_\+\+\_\+\+STATE\+\_\+\+\_\+)
+\item 
+\+\#define \doxymbox{\hyperlink{group___u_t_i_l_s___l_l___private___macros_ga731945d8182d85f4912bac7b43be267e}{IS\+\_\+\+LL\+\_\+\+UTILS\+\_\+\+HSE\+\_\+\+FREQUENCY}}(\+\_\+\+\_\+\+FREQUENCY\+\_\+\+\_\+)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{group___u_t_i_l_s___l_l___e_f___d_e_l_a_y_ga485805c708e3aa0820454523782d4de4}{LL\+\_\+\+Init1ms\+Tick}} (uint32\+\_\+t HCLKFrequency)
+\begin{DoxyCompactList}\small\item\em This function configures the Cortex-\/M Sys\+Tick source to have 1ms time base. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{group___u_t_i_l_s___l_l___e_f___d_e_l_a_y_ga7b7ca6d9cbec320c3e9f326b203807aa}{LL\+\_\+m\+Delay}} (uint32\+\_\+t Delay)
+\begin{DoxyCompactList}\small\item\em This function provides accurate delay (in milliseconds) based on Sys\+Tick counter flag. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{group___u_t_i_l_s___e_f___s_y_s_t_e_m_ga5af902d59c4c2d9dc5e189df0bc71ecd}{LL\+\_\+\+Set\+System\+Core\+Clock}} (uint32\+\_\+t HCLKFrequency)
+\begin{DoxyCompactList}\small\item\em This function sets directly System\+Core\+Clock CMSIS variable. \end{DoxyCompactList}\item 
+Error\+Status \doxymbox{\hyperlink{group___u_t_i_l_s___e_f___s_y_s_t_e_m_ga9ec589dc0c8acc1b31d4b06acf603337}{LL\+\_\+\+Set\+Flash\+Latency}} (uint32\+\_\+t Frequency)
+\begin{DoxyCompactList}\small\item\em Update number of Flash wait states in line with new frequency and current voltage range. \end{DoxyCompactList}\item 
+Error\+Status \doxymbox{\hyperlink{group___u_t_i_l_s___e_f___s_y_s_t_e_m_ga7ada5e4210f6ef80ef9f55bf9dd048c6}{LL\+\_\+\+PLL\+\_\+\+Config\+System\+Clock\+\_\+\+HSI}} (\doxymbox{\hyperlink{struct_l_l___u_t_i_l_s___p_l_l_init_type_def}{LL\+\_\+\+UTILS\+\_\+\+PLLInit\+Type\+Def}} \texorpdfstring{$\ast$}{*}UTILS\+\_\+\+PLLInit\+Struct, \doxymbox{\hyperlink{struct_l_l___u_t_i_l_s___clk_init_type_def}{LL\+\_\+\+UTILS\+\_\+\+Clk\+Init\+Type\+Def}} \texorpdfstring{$\ast$}{*}UTILS\+\_\+\+Clk\+Init\+Struct)
+\begin{DoxyCompactList}\small\item\em This function configures system clock with HSI as clock source of the PLL. \end{DoxyCompactList}\item 
+Error\+Status \doxymbox{\hyperlink{group___u_t_i_l_s___e_f___s_y_s_t_e_m_gaf6c8553d03464d4646b63321b97d25e2}{LL\+\_\+\+PLL\+\_\+\+Config\+System\+Clock\+\_\+\+HSE}} (uint32\+\_\+t HSEFrequency, uint32\+\_\+t HSEBypass, \doxymbox{\hyperlink{struct_l_l___u_t_i_l_s___p_l_l_init_type_def}{LL\+\_\+\+UTILS\+\_\+\+PLLInit\+Type\+Def}} \texorpdfstring{$\ast$}{*}UTILS\+\_\+\+PLLInit\+Struct, \doxymbox{\hyperlink{struct_l_l___u_t_i_l_s___clk_init_type_def}{LL\+\_\+\+UTILS\+\_\+\+Clk\+Init\+Type\+Def}} \texorpdfstring{$\ast$}{*}UTILS\+\_\+\+Clk\+Init\+Struct)
+\begin{DoxyCompactList}\small\item\em This function configures system clock with HSE as clock source of the PLL. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+UTILS LL module driver. 
+
+\begin{DoxyAuthor}{Author}
+MCD Application Team 
+\end{DoxyAuthor}
+\begin{DoxyAttention}{Attention}
+
+\end{DoxyAttention}
+Copyright (c) 2016 STMicroelectronics. All rights reserved.
+
+This software is licensed under terms that can be found in the LICENSE file in the root directory of this software component. If no LICENSE file comes with this software, it is provided AS-\/\+IS. 
+
+\label{doc-define-members}
+\Hypertarget{stm32l0xx__ll__utils_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{stm32l0xx__ll__utils_8c_a631dea7b230e600555f979c62af1de21}\index{stm32l0xx\_ll\_utils.c@{stm32l0xx\_ll\_utils.c}!assert\_param@{assert\_param}}
+\index{assert\_param@{assert\_param}!stm32l0xx\_ll\_utils.c@{stm32l0xx\_ll\_utils.c}}
+\doxysubsubsection{\texorpdfstring{assert\_param}{assert\_param}}
+{\footnotesize\ttfamily \label{stm32l0xx__ll__utils_8c_a631dea7b230e600555f979c62af1de21} 
+\+\#define assert\+\_\+param(\begin{DoxyParamCaption}\item[{}]{expr}{}\end{DoxyParamCaption})}
+
+{\bfseries Value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((void)0U)}
+
+\end{DoxyCode}

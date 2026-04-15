@@ -1,0 +1,61 @@
+\doxysection{Core/\+\+Src/\+stm32l0xx\+\_\+it.c File Reference}
+\hypertarget{stm32l0xx__it_8c}{}\label{stm32l0xx__it_8c}\index{Core/Src/stm32l0xx\_it.c@{Core/Src/stm32l0xx\_it.c}}
+
+
+Interrupt Service Routines.  
+
+
+{\ttfamily \+\#include "{}main.\+h"{}}\newline
+{\ttfamily \+\#include "{}stm32l0xx\+\_\+it.\+h"{}}\newline
+{\ttfamily \+\#include "{}usart.\+h"{}}\newline
+{\ttfamily \+\#include "{}inttypes.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{stm32l0xx__it_8c_a6ad7a5e3ee69cb6db6a6b9111ba898bc}\label{stm32l0xx__it_8c_a6ad7a5e3ee69cb6db6a6b9111ba898bc} 
+void {\bfseries NMI\+\_\+\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles Non maskable Interrupt. \end{DoxyCompactList}\item 
+\Hypertarget{stm32l0xx__it_8c_a2bffc10d5bd4106753b7c30e86903bea}\label{stm32l0xx__it_8c_a2bffc10d5bd4106753b7c30e86903bea} 
+void {\bfseries Hard\+Fault\+\_\+\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles Hard fault interrupt. \end{DoxyCompactList}\item 
+\Hypertarget{stm32l0xx__it_8c_a3e5ddb3df0d62f2dc357e64a3f04a6ce}\label{stm32l0xx__it_8c_a3e5ddb3df0d62f2dc357e64a3f04a6ce} 
+void {\bfseries SVC\+\_\+\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles System service call via SWI instruction. \end{DoxyCompactList}\item 
+\Hypertarget{stm32l0xx__it_8c_a6303e1f258cbdc1f970ce579cc015623}\label{stm32l0xx__it_8c_a6303e1f258cbdc1f970ce579cc015623} 
+void {\bfseries Pend\+SV\+\_\+\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles Pendable request for system service. \end{DoxyCompactList}\item 
+\Hypertarget{stm32l0xx__it_8c_ab5e09814056d617c521549e542639b7e}\label{stm32l0xx__it_8c_ab5e09814056d617c521549e542639b7e} 
+void {\bfseries Sys\+Tick\+\_\+\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles System tick timer. \end{DoxyCompactList}\item 
+\Hypertarget{stm32l0xx__it_8c_a0ca6fd0e6f77921dd1123539857ba0a8}\label{stm32l0xx__it_8c_a0ca6fd0e6f77921dd1123539857ba0a8} 
+void {\bfseries USART2\+\_\+\+IRQHandler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles USART2 global interrupt /\+ USART2 wake-\/up interrupt through EXTI line 26. \end{DoxyCompactList}\item 
+\Hypertarget{stm32l0xx__it_8c_a3b81b02d98db4f42e5c320916e637581}\label{stm32l0xx__it_8c_a3b81b02d98db4f42e5c320916e637581} 
+void {\bfseries getch\+Init} (void)
+\item 
+\Hypertarget{stm32l0xx__it_8c_a98392a1dac26e7f0c29800436cc297b2}\label{stm32l0xx__it_8c_a98392a1dac26e7f0c29800436cc297b2} 
+uint8\+\_\+t {\bfseries getch} (void)
+\item 
+\Hypertarget{stm32l0xx__it_8c_a97e9b1fe8d4c010474637a654aad6566}\label{stm32l0xx__it_8c_a97e9b1fe8d4c010474637a654aad6566} 
+int {\bfseries kbhit} (void)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{stm32l0xx__it_8c_a352be62d4ed4eb3d260f670cbb06c4ae}\label{stm32l0xx__it_8c_a352be62d4ed4eb3d260f670cbb06c4ae} 
+uint8\+\_\+t {\bfseries g\+\_\+rx\+Car\+USART2}
+\item 
+\Hypertarget{stm32l0xx__it_8c_abd1c3013388247e93c8c18ab03c31347}\label{stm32l0xx__it_8c_abd1c3013388247e93c8c18ab03c31347} 
+volatile uint32\+\_\+t {\bfseries get\+\_\+tick} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Interrupt Service Routines. 
+
+\begin{DoxyAttention}{Attention}
+
+\end{DoxyAttention}
+Copyright (c) 2022 STMicroelectronics. All rights reserved.
+
+This software is licensed under terms that can be found in the LICENSE file in the root directory of this software component. If no LICENSE file comes with this software, it is provided AS-\/\+IS. 

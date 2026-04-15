@@ -1,0 +1,28 @@
+var struct_r_t_c___type_def =
+[
+    [ "ALRMAR", "struct_r_t_c___type_def.html#ad7e54d5c5a4b9fd1e26aca85b1e36c7f", null ],
+    [ "ALRMASSR", "struct_r_t_c___type_def.html#ac5b2e3c0dcdcb569f3fe15dfe3794bc1", null ],
+    [ "ALRMBR", "struct_r_t_c___type_def.html#a9816616e1f00955c8982469d0dd9c953", null ],
+    [ "ALRMBSSR", "struct_r_t_c___type_def.html#a249009cd672e7bcd52df1a41de4619e1", null ],
+    [ "BKP0R", "struct_r_t_c___type_def.html#ab32c76ca1f3bd0f0f46d42c2dfa74524", null ],
+    [ "BKP1R", "struct_r_t_c___type_def.html#a5439bfca3708c6b8be6a74626f06111f", null ],
+    [ "BKP2R", "struct_r_t_c___type_def.html#aa845c401b24d2ef1049f489f26d35626", null ],
+    [ "BKP3R", "struct_r_t_c___type_def.html#ac3802c3b17482a0667fb34ddd1863434", null ],
+    [ "BKP4R", "struct_r_t_c___type_def.html#a6131b2f2896c122cf223206e4cfd2bd0", null ],
+    [ "CALR", "struct_r_t_c___type_def.html#aea66ea813830c2f3ff207464794397a4", null ],
+    [ "CR", "struct_r_t_c___type_def.html#a731d9209ce40dce6ea61fcc6f818c892", null ],
+    [ "DR", "struct_r_t_c___type_def.html#a8750eae683cb3d382476dc7cdcd92b96", null ],
+    [ "ISR", "struct_r_t_c___type_def.html#a5a7b104d80b48b5708b50cdc487d6a78", null ],
+    [ "OR", "struct_r_t_c___type_def.html#ac4ec213226146fa48aa9b29e0e80b3ad", null ],
+    [ "PRER", "struct_r_t_c___type_def.html#a5f43a11e0873212f598e41db5f2dcf6a", null ],
+    [ "RESERVED", "struct_r_t_c___type_def.html#a37afe665222962031d111527b7fd406b", null ],
+    [ "SHIFTR", "struct_r_t_c___type_def.html#a6082856c9191f5003b6163c0d3afcaff", null ],
+    [ "SSR", "struct_r_t_c___type_def.html#aefbd38be87117d1fced289bf9c534414", null ],
+    [ "TAMPCR", "struct_r_t_c___type_def.html#ac0647909891aa2c3abd2bc54300ceb9b", null ],
+    [ "TR", "struct_r_t_c___type_def.html#a2e8783857f8644a4eb80ebc51e1cba42", null ],
+    [ "TSDR", "struct_r_t_c___type_def.html#aa4633dbcdb5dd41a714020903fd67c82", null ],
+    [ "TSSSR", "struct_r_t_c___type_def.html#a1e8b4b987496ee1c0c6f16b0a94ea1a1", null ],
+    [ "TSTR", "struct_r_t_c___type_def.html#a1ddbb2a5eaa54ff43835026dec99ae1c", null ],
+    [ "WPR", "struct_r_t_c___type_def.html#ad54765af56784498a3ae08686b79a1ff", null ],
+    [ "WUTR", "struct_r_t_c___type_def.html#ad93017bb0a778a2aad9cd71211fc770a", null ]
+];

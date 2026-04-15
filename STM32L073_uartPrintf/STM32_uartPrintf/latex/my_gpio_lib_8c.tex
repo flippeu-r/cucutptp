@@ -1,0 +1,187 @@
+\doxysection{Core/\+\+Src/\+my\+Gpio\+Lib.c File Reference}
+\hypertarget{my_gpio_lib_8c}{}\label{my_gpio_lib_8c}\index{Core/Src/myGpioLib.c@{Core/Src/myGpioLib.c}}
+
+
+Implémentation de la librairie GPIO -\/ SYS3046.  
+
+
+{\ttfamily \+\#include "{}my\+Gpio\+Lib.\+h"{}}\newline
+{\ttfamily \+\#include $<$stdio.\+h$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{my_gpio_lib_8c_ad3a2310cc70cb1e6519044d770dbc5a8}{GPIOA\+\_\+\+Write\+Pin}} (uint8\+\_\+t pin, uint8\+\_\+t state)
+\begin{DoxyCompactList}\small\item\em Ecrit l\textquotesingle{}état logique d\textquotesingle{}une sortie du port A. \end{DoxyCompactList}\item 
+uint8\+\_\+t \doxymbox{\hyperlink{my_gpio_lib_8c_a0c29b3cd91568105ad8413280dfe3362}{GPIOA\+\_\+\+Read\+Output}} (uint8\+\_\+t pin)
+\begin{DoxyCompactList}\small\item\em Lit l\textquotesingle{}état logique d\textquotesingle{}une sortie du port A (ODR). \end{DoxyCompactList}\item 
+uint8\+\_\+t \doxymbox{\hyperlink{my_gpio_lib_8c_a1989ad082f68e7130519d1fa24cccfb3}{GPIOA\+\_\+\+Read\+Input}} (uint8\+\_\+t pin)
+\begin{DoxyCompactList}\small\item\em Lit l\textquotesingle{}état logique d\textquotesingle{}une entrée du port A (IDR). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{my_gpio_lib_8c_aa0080bf947cf5631788482cd37fb3bf2}{GPIOA\+\_\+\+Toggle\+Pin}} (uint8\+\_\+t pin)
+\begin{DoxyCompactList}\small\item\em Change l\textquotesingle{}état d\textquotesingle{}une sortie du port A (toggle). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{my_gpio_lib_8c_abca020ac7228cd7b7f53d199d929794f}{LED2\+\_\+\+Write}} (uint8\+\_\+t state)
+\begin{DoxyCompactList}\small\item\em Allume ou éteint la LED2. \end{DoxyCompactList}\item 
+uint8\+\_\+t \doxymbox{\hyperlink{my_gpio_lib_8c_a253a4fde39a957fb4c7ec05f7886a4cc}{LED2\+\_\+\+Read}} (void)
+\begin{DoxyCompactList}\small\item\em Lit l\textquotesingle{}état de la LED2. \end{DoxyCompactList}\item 
+uint8\+\_\+t \doxymbox{\hyperlink{my_gpio_lib_8c_a2c0b427420ba3c2710d64d043b6684b6}{B1\+\_\+\+Read}} (void)
+\begin{DoxyCompactList}\small\item\em Lit l\textquotesingle{}état du bouton B1 USER. \end{DoxyCompactList}\item 
+\Hypertarget{my_gpio_lib_8c_aed90543022cc0d772294eb20b709a757}\label{my_gpio_lib_8c_aed90543022cc0d772294eb20b709a757} 
+void {\bfseries LED2\+\_\+\+On\+\_\+\+Duration} (uint32\+\_\+t duration\+\_\+100ms)
+\item 
+void \doxymbox{\hyperlink{my_gpio_lib_8c_a40776266462479c27a951fe83ce6123b}{LED2\+\_\+\+Blink}} (uint32\+\_\+t half\+\_\+period\+\_\+100ms)
+\begin{DoxyCompactList}\small\item\em Clignotement infini de la LED2. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{my_gpio_lib_8c_a417bb685c998a2ffda7500dccf30ba21}{LED2\+\_\+\+Blink\+\_\+\+Duration}} (uint32\+\_\+t half\+\_\+period\+\_\+100ms, uint32\+\_\+t duration\+\_\+100ms)
+\begin{DoxyCompactList}\small\item\em Clignotement de la LED2 pendant une durée limitée. \end{DoxyCompactList}\item 
+\Hypertarget{my_gpio_lib_8c_a08c3a7bd3575642b76228806c1d049cf}\label{my_gpio_lib_8c_a08c3a7bd3575642b76228806c1d049cf} 
+void {\bfseries GPIO\+\_\+\+Test} (void)
+\begin{DoxyCompactList}\small\item\em Fonction de test des fonctions LED2 et B1. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implémentation de la librairie GPIO -\/ SYS3046. 
+
+
+
+\label{doc-func-members}
+\Hypertarget{my_gpio_lib_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{my_gpio_lib_8c_a2c0b427420ba3c2710d64d043b6684b6}\index{myGpioLib.c@{myGpioLib.c}!B1\_Read@{B1\_Read}}
+\index{B1\_Read@{B1\_Read}!myGpioLib.c@{myGpioLib.c}}
+\doxysubsubsection{\texorpdfstring{B1\_Read()}{B1\_Read()}}
+{\footnotesize\ttfamily \label{my_gpio_lib_8c_a2c0b427420ba3c2710d64d043b6684b6} 
+uint8\+\_\+t B1\+\_\+\+Read (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Lit l\textquotesingle{}état du bouton B1 USER. 
+
+\begin{DoxyReturn}{Returns}
+1 si appuyé, 0 sinon 
+\end{DoxyReturn}
+\Hypertarget{my_gpio_lib_8c_a1989ad082f68e7130519d1fa24cccfb3}\index{myGpioLib.c@{myGpioLib.c}!GPIOA\_ReadInput@{GPIOA\_ReadInput}}
+\index{GPIOA\_ReadInput@{GPIOA\_ReadInput}!myGpioLib.c@{myGpioLib.c}}
+\doxysubsubsection{\texorpdfstring{GPIOA\_ReadInput()}{GPIOA\_ReadInput()}}
+{\footnotesize\ttfamily \label{my_gpio_lib_8c_a1989ad082f68e7130519d1fa24cccfb3} 
+uint8\+\_\+t GPIOA\+\_\+\+Read\+Input (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{pin}{}\end{DoxyParamCaption})}
+
+
+
+Lit l\textquotesingle{}état logique d\textquotesingle{}une entrée du port A (IDR). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pin} & Numéro de la broche (0 à 15) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 si haut, 0 si bas 
+\end{DoxyReturn}
+\Hypertarget{my_gpio_lib_8c_a0c29b3cd91568105ad8413280dfe3362}\index{myGpioLib.c@{myGpioLib.c}!GPIOA\_ReadOutput@{GPIOA\_ReadOutput}}
+\index{GPIOA\_ReadOutput@{GPIOA\_ReadOutput}!myGpioLib.c@{myGpioLib.c}}
+\doxysubsubsection{\texorpdfstring{GPIOA\_ReadOutput()}{GPIOA\_ReadOutput()}}
+{\footnotesize\ttfamily \label{my_gpio_lib_8c_a0c29b3cd91568105ad8413280dfe3362} 
+uint8\+\_\+t GPIOA\+\_\+\+Read\+Output (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{pin}{}\end{DoxyParamCaption})}
+
+
+
+Lit l\textquotesingle{}état logique d\textquotesingle{}une sortie du port A (ODR). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pin} & Numéro de la broche (0 à 15) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 si haut, 0 si bas 
+\end{DoxyReturn}
+\Hypertarget{my_gpio_lib_8c_aa0080bf947cf5631788482cd37fb3bf2}\index{myGpioLib.c@{myGpioLib.c}!GPIOA\_TogglePin@{GPIOA\_TogglePin}}
+\index{GPIOA\_TogglePin@{GPIOA\_TogglePin}!myGpioLib.c@{myGpioLib.c}}
+\doxysubsubsection{\texorpdfstring{GPIOA\_TogglePin()}{GPIOA\_TogglePin()}}
+{\footnotesize\ttfamily \label{my_gpio_lib_8c_aa0080bf947cf5631788482cd37fb3bf2} 
+void GPIOA\+\_\+\+Toggle\+Pin (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{pin}{}\end{DoxyParamCaption})}
+
+
+
+Change l\textquotesingle{}état d\textquotesingle{}une sortie du port A (toggle). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pin} & Numéro de la broche (0 à 15) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{my_gpio_lib_8c_ad3a2310cc70cb1e6519044d770dbc5a8}\index{myGpioLib.c@{myGpioLib.c}!GPIOA\_WritePin@{GPIOA\_WritePin}}
+\index{GPIOA\_WritePin@{GPIOA\_WritePin}!myGpioLib.c@{myGpioLib.c}}
+\doxysubsubsection{\texorpdfstring{GPIOA\_WritePin()}{GPIOA\_WritePin()}}
+{\footnotesize\ttfamily \label{my_gpio_lib_8c_ad3a2310cc70cb1e6519044d770dbc5a8} 
+void GPIOA\+\_\+\+Write\+Pin (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{pin}{, }\item[{uint8\+\_\+t}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Ecrit l\textquotesingle{}état logique d\textquotesingle{}une sortie du port A. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pin} & Numéro de la broche (0 à 15) \\
+\hline
+{\em state} & 1 = niveau haut, 0 = niveau bas \\
+\hline
+\end{DoxyParams}
+\Hypertarget{my_gpio_lib_8c_a40776266462479c27a951fe83ce6123b}\index{myGpioLib.c@{myGpioLib.c}!LED2\_Blink@{LED2\_Blink}}
+\index{LED2\_Blink@{LED2\_Blink}!myGpioLib.c@{myGpioLib.c}}
+\doxysubsubsection{\texorpdfstring{LED2\_Blink()}{LED2\_Blink()}}
+{\footnotesize\ttfamily \label{my_gpio_lib_8c_a40776266462479c27a951fe83ce6123b} 
+void LED2\+\_\+\+Blink (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{half\+\_\+period\+\_\+100ms}{}\end{DoxyParamCaption})}
+
+
+
+Clignotement infini de la LED2. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em half\+\_\+period\+\_\+100ms} & demi-\/période en 1/\+10s (ex:\+ 5 = 500ms soit 1Hz) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{my_gpio_lib_8c_a417bb685c998a2ffda7500dccf30ba21}\index{myGpioLib.c@{myGpioLib.c}!LED2\_Blink\_Duration@{LED2\_Blink\_Duration}}
+\index{LED2\_Blink\_Duration@{LED2\_Blink\_Duration}!myGpioLib.c@{myGpioLib.c}}
+\doxysubsubsection{\texorpdfstring{LED2\_Blink\_Duration()}{LED2\_Blink\_Duration()}}
+{\footnotesize\ttfamily \label{my_gpio_lib_8c_a417bb685c998a2ffda7500dccf30ba21} 
+void LED2\+\_\+\+Blink\+\_\+\+Duration (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{half\+\_\+period\+\_\+100ms}{, }\item[{uint32\+\_\+t}]{duration\+\_\+100ms}{}\end{DoxyParamCaption})}
+
+
+
+Clignotement de la LED2 pendant une durée limitée. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em half\+\_\+period\+\_\+100ms} & demi-\/période en 1/\+10s \\
+\hline
+{\em duration\+\_\+100ms} & durée totale du clignotement en 1/\+10s \\
+\hline
+\end{DoxyParams}
+\Hypertarget{my_gpio_lib_8c_a253a4fde39a957fb4c7ec05f7886a4cc}\index{myGpioLib.c@{myGpioLib.c}!LED2\_Read@{LED2\_Read}}
+\index{LED2\_Read@{LED2\_Read}!myGpioLib.c@{myGpioLib.c}}
+\doxysubsubsection{\texorpdfstring{LED2\_Read()}{LED2\_Read()}}
+{\footnotesize\ttfamily \label{my_gpio_lib_8c_a253a4fde39a957fb4c7ec05f7886a4cc} 
+uint8\+\_\+t LED2\+\_\+\+Read (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Lit l\textquotesingle{}état de la LED2. 
+
+\begin{DoxyReturn}{Returns}
+1 si allumée, 0 si éteinte 
+\end{DoxyReturn}
+\Hypertarget{my_gpio_lib_8c_abca020ac7228cd7b7f53d199d929794f}\index{myGpioLib.c@{myGpioLib.c}!LED2\_Write@{LED2\_Write}}
+\index{LED2\_Write@{LED2\_Write}!myGpioLib.c@{myGpioLib.c}}
+\doxysubsubsection{\texorpdfstring{LED2\_Write()}{LED2\_Write()}}
+{\footnotesize\ttfamily \label{my_gpio_lib_8c_abca020ac7228cd7b7f53d199d929794f} 
+void LED2\+\_\+\+Write (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Allume ou éteint la LED2. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & 1 = allumée, 0 = éteinte \\
+\hline
+\end{DoxyParams}

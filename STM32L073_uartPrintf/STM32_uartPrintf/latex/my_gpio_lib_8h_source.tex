@@ -1,0 +1,60 @@
+\doxysection{my\+Gpio\+Lib.\+h}
+\hypertarget{my_gpio_lib_8h_source}{}\label{my_gpio_lib_8h_source}\index{Core/Src/myGpioLib.h@{Core/Src/myGpioLib.h}}
+\doxymbox{\hyperlink{my_gpio_lib_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#ifndef\ INC\_MYGPIOLIB\_H\_}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ INC\_MYGPIOLIB\_H\_}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{comment}{/*\ -\/-\/-\/-\/\ Adresses\ registres\ GPIOA\ -\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#define\ GPIOA\_IDR\ \ *((volatile\ uint32\_t\ *)\ 0x50000010)}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#define\ GPIOA\_ODR\ \ *((volatile\ uint32\_t\ *)\ 0x50000014)}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{comment}{/*\ -\/-\/-\/-\/\ LED2\ :\ PA5\ -\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#define\ LED2\_BIT\ \ \ (1U\ <<\ 5)}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{comment}{/*\ -\/-\/-\/-\/\ Bouton\ B1\ USER\ :\ PC13\ -\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ GPIOC\_IDR\ \ *((volatile\ uint32\_t\ *)\ 0x50000810)}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ B1\_BIT\ \ \ \ \ (1U\ <<\ 13)}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{comment}{/*\ -\/-\/-\/-\/\ Registres\ GPIOA\ complets\ -\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ GPIOA\_MODER\ \ *((volatile\ uint32\_t\ *)\ 0x50000000)}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{comment}{/*\ -\/-\/-\/-\/\ Prototypes\ -\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{extern}\ \textcolor{keyword}{volatile}\ uint32\_t\ get\_tick;}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\///}}
+\DoxyCodeLine{00036\ \textcolor{keywordtype}{void}\ LED2\_On\_Duration(uint32\_t\ duration\_100ms);}
+\DoxyCodeLine{00042\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{my_gpio_lib_8h_ad3a2310cc70cb1e6519044d770dbc5a8}{GPIOA\_WritePin}}(uint8\_t\ pin,\ uint8\_t\ state);}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00049\ uint8\_t\ \doxymbox{\hyperlink{my_gpio_lib_8h_a0c29b3cd91568105ad8413280dfe3362}{GPIOA\_ReadOutput}}(uint8\_t\ pin);}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00055\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{my_gpio_lib_8h_a40776266462479c27a951fe83ce6123b}{LED2\_Blink}}(uint32\_t\ half\_period\_100ms);}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00063\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{my_gpio_lib_8h_a417bb685c998a2ffda7500dccf30ba21}{LED2\_Blink\_Duration}}(uint32\_t\ half\_period\_100ms,\ uint32\_t\ duration\_100ms);}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00070\ uint8\_t\ \doxymbox{\hyperlink{my_gpio_lib_8h_a1989ad082f68e7130519d1fa24cccfb3}{GPIOA\_ReadInput}}(uint8\_t\ pin);}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00076\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{my_gpio_lib_8h_aa0080bf947cf5631788482cd37fb3bf2}{GPIOA\_TogglePin}}(uint8\_t\ pin);}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00083\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{my_gpio_lib_8h_abca020ac7228cd7b7f53d199d929794f}{LED2\_Write}}(uint8\_t\ state);}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00089\ uint8\_t\ \doxymbox{\hyperlink{my_gpio_lib_8h_a253a4fde39a957fb4c7ec05f7886a4cc}{LED2\_Read}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00095\ uint8\_t\ \doxymbox{\hyperlink{my_gpio_lib_8h_a2c0b427420ba3c2710d64d043b6684b6}{B1\_Read}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00100\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{my_gpio_lib_8h_a08c3a7bd3575642b76228806c1d049cf}{GPIO\_Test}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

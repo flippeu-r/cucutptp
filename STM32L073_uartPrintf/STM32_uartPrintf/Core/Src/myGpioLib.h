@@ -1,8 +1,6 @@
 /**
  * @file myGpioLib.h
  * @brief Librairie de contrôle GPIO pour STM32L0 - SYS3046
- * @author Binôme XX
- * @date 2024
  *
  *
  */

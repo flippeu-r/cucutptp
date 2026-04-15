@@ -1,0 +1,24 @@
+\doxysection{retarget.\+h}
+\hypertarget{retarget_8h_source}{}\label{retarget_8h_source}\index{Core/Inc/retarget.h@{Core/Inc/retarget.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ All\ credit\ to\ Carmine\ Noviello\ for\ this\ code}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ https://github.com/cnoviello/mastering-\/stm32/blob/master/nucleo-\/f030R8/system/include/retarget/retarget.h}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#ifndef\ \_RETARGET\_H\_\_}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#define\ \_RETARGET\_H\_\_}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{main_8h}{main.h}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <sys/stat.h>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keywordtype}{void}\ RetargetInit(\doxymbox{\hyperlink{struct_u_s_a_r_t___type_def}{USART\_TypeDef}}\ *huart);}
+\DoxyCodeLine{00011\ \textcolor{keywordtype}{int}\ \_isatty(\textcolor{keywordtype}{int}\ fd);}
+\DoxyCodeLine{00012\ \textcolor{keywordtype}{int}\ \_write(\textcolor{keywordtype}{int}\ fd,\ \textcolor{keywordtype}{char}*\ ptr,\ \textcolor{keywordtype}{int}\ len);}
+\DoxyCodeLine{00013\ \textcolor{keywordtype}{int}\ \_close(\textcolor{keywordtype}{int}\ fd);}
+\DoxyCodeLine{00014\ \textcolor{keywordtype}{int}\ \_lseek(\textcolor{keywordtype}{int}\ fd,\ \textcolor{keywordtype}{int}\ ptr,\ \textcolor{keywordtype}{int}\ dir);}
+\DoxyCodeLine{00015\ \textcolor{keywordtype}{int}\ \_read(\textcolor{keywordtype}{int}\ fd,\ \textcolor{keywordtype}{char}*\ ptr,\ \textcolor{keywordtype}{int}\ len);}
+\DoxyCodeLine{00016\ \textcolor{keywordtype}{int}\ \_fstat(\textcolor{keywordtype}{int}\ fd,\ \textcolor{keyword}{struct}\ stat*\ st);}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\#ifndef\ \_RETARGET\_H\_\_}}
+
+\end{DoxyCode}

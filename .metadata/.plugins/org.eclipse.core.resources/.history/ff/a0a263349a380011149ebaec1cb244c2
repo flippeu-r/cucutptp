@@ -1,0 +1,159 @@
+/**
+ * @file myGpioLib.c
+ * @brief Implémentation de la librairie GPIO - SYS3046
+ * @author Binôme XX
+ * @date 2024
+ *
+ *
+ *@mainpage  SYS3046 course template
+ *
+ *            le caca
+ *            Project description...Project description...Project description...
+ *            Project description...Project description...Project description...
+ *
+ *            Project description...Project description...Project description...
+ *
+ *            Project description...Project description...Project description...
+ *
+ */
+
+#include "myGpioLib.h"
+#include <stdio.h>
+
+/* ---------- Etape 6 : Ecriture sortie port A ---------- */
+void GPIOA_WritePin(uint8_t pin, uint8_t state) {
+    if (state)
+        GPIOA_ODR = (GPIOA_ODR | (1U << pin));
+    else
+        GPIOA_ODR = (GPIOA_ODR & ~(1U << pin));
+}
+
+/* ---------- Etape 7 : Lecture sortie port A (ODR) ---------- */
+uint8_t GPIOA_ReadOutput(uint8_t pin) {
+    return (GPIOA_ODR & (1U << pin)) ? 1 : 0;
+}
+
+/* ---------- Etape 8 : Lecture entrée port A (IDR) ---------- */
+uint8_t GPIOA_ReadInput(uint8_t pin) {
+    return (GPIOA_IDR & (1U << pin)) ? 1 : 0;
+}
+
+/* ---------- Etape 9 : Toggle sortie port A ---------- */
+void GPIOA_TogglePin(uint8_t pin) {
+    GPIOA_ODR = (GPIOA_ODR ^ (1U << pin));
+}
+
+/* ---------- Etape 1 ---------- */
+void LED2_Write(uint8_t state) {
+    if (state)
+        GPIOA_ODR = (GPIOA_ODR | LED2_BIT);
+    else
+        GPIOA_ODR = (GPIOA_ODR & ~LED2_BIT);
+}
+
+/* ---------- Etape 2 ---------- */
+uint8_t LED2_Read(void) {
+    return (GPIOA_ODR & LED2_BIT) ? 1 : 0;
+}
+
+/* ---------- Etape 3 ---------- */
+uint8_t B1_Read(void) {
+    /* B1 est actif à l'état bas (pull-up interne) */
+    return (GPIOC_IDR & B1_BIT) ? 0 : 1;
+}
+
+// numéro 9 :
+void LED2_On_Duration(uint32_t duration_100ms) {
+    uint32_t start = get_tick;
+    LED2_Write(1);
+    while ((get_tick - start) < (duration_100ms * 100)){
+    	printf("Tick : %lu ms\r\n", get_tick);
+    }
+    LED2_Write(0);
+}
+
+/* ---------- Etape 11 : Clignotement LED2 ---------- */
+void LED2_Blink(uint32_t half_period_100ms) {
+    uint32_t half_ms = half_period_100ms * 100;
+    uint32_t start = get_tick;
+
+    while (1) {
+        LED2_Write(1);
+        start = get_tick;
+        while ((get_tick - start) < half_ms);
+
+        LED2_Write(0);
+        start = get_tick;
+        while ((get_tick - start) < half_ms);
+    }
+}
+
+/* ---------- Etape 12 : Clignotement LED2 durée limitée ---------- */
+void LED2_Blink_Duration(uint32_t half_period_100ms, uint32_t duration_100ms) {
+    uint32_t half_ms     = half_period_100ms * 100;
+    uint32_t duration_ms = duration_100ms * 100;
+    uint32_t start_total = get_tick;
+    uint32_t start_half;
+
+    while ((get_tick - start_total) < duration_ms) {
+        LED2_Write(1);
+        start_half = get_tick;
+        while ((get_tick - start_half) < half_ms &&
+               (get_tick - start_total) < duration_ms);
+
+        LED2_Write(0);
+        start_half = get_tick;
+        while ((get_tick - start_half) < half_ms &&
+               (get_tick - start_total) < duration_ms);
+    }
+
+    LED2_Write(0); // s'assurer que la LED est éteinte à la fin
+}
+
+/* ---------- Etape 4 : Tests unitaires ---------- */
+void GPIO_Test(void) {
+    uint8_t result;
+
+    printf("\r\n=== TEST GPIO ===\r\n");
+
+    /* -- Test LED2 allumée -- */
+    LED2_Write(1);
+    result = LED2_Read();
+    printf("LED2 ON  -> Read = %d : %s\r\n", result, (result == 1) ? "OK" : "Echec");
+
+    /* -- Test LED2 éteinte -- */
+    LED2_Write(0);
+    result = LED2_Read();
+    printf("LED2 OFF -> Read = %d : %s\r\n", result, (result == 0) ? "OK" : "Echec");
+
+    /* -- Test bouton B1 (manuel) -- */
+    printf("Appuyez sur B1 USER dans les 5 secondes...\r\n");
+    uint32_t timeout = 5000000;
+    while (!B1_Read() && timeout--);
+    result = B1_Read();
+    printf("Bouton B1 -> Read = %d : %s\r\n", result, (result == 1) ? "OK" : "Echec");
+
+    /* -- Tests étapes 6-9 -- */
+    printf("\r\n--- Tests GPIOA generique ---\r\n");
+
+    /* Etape 6 & 7 : écriture/lecture sur PA5 (LED2) */
+    GPIOA_WritePin(5, 1);
+    result = GPIOA_ReadOutput(5);
+    printf("PA5 WritePin(1) -> ReadOutput = %d : %s\r\n", result, (result==1)?"OK":"Echec");
+
+    GPIOA_WritePin(5, 0);
+    result = GPIOA_ReadOutput(5);
+    printf("PA5 WritePin(0) -> ReadOutput = %d : %s\r\n", result, (result==0)?"OK":"Echec");
+
+    /* Etape 9 : toggle */
+    GPIOA_WritePin(5, 0);
+    GPIOA_TogglePin(5);
+    result = GPIOA_ReadOutput(5);
+    printf("PA5 Toggle      -> ReadOutput = %d : %s\r\n", result, (result==1)?"OK":"Echec");
+    GPIOA_WritePin(5, 0); // on remet à 0 après le test
+
+    printf("=== FIN DES TESTS ===\r\n\r\n");
+}
+
+
+
