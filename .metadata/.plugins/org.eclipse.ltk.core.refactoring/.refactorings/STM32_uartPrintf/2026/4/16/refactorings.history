@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;STM32_uartPrintf/Core/Src/DHT.h&apos; to &apos;Dht22.h&apos;" description="Rename resource &apos;DHT.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="Core/Src/DHT.h" name="Dht22.h" stamp="1776265473920" updateReferences="true"/>
+</session>

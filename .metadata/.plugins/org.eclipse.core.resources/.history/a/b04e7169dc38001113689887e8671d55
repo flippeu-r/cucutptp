@@ -9,11 +9,32 @@
 
 /* USER CODE BEGIN Includes */
 #include "myGpioLib.h"
+#include "DHT.h"
+/* USER CODE END Includes */
+
+
+/**
+  ******************************************************************************
+  * @file           : main.c
+  * @brief          : Main program body
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2022 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* USER CODE END Header */
+/* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "usart.h"
 #include "gpio.h"
 
-#include "Dht22.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "myGpioLib.h"
@@ -106,7 +127,7 @@ int main(void)
       char c = getch();
       printf("Recu : %c\r\n", c);
 
-      if (c == 'm') {
+      else if (c == 'm') {
           DHT22_Data d;
           DHT22_Status status = DHT22_Read(&d);
 
@@ -118,6 +139,7 @@ int main(void)
               printf("Erreur : donnees corrompues\r\n");
           else
               printf("Erreur : timeout\r\n");
+      }
       }
     }
     /* USER CODE END WHILE */

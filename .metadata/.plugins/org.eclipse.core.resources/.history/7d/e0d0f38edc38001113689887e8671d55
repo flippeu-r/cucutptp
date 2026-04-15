@@ -106,7 +106,7 @@ int main(void)
       char c = getch();
       printf("Recu : %c\r\n", c);
 
-      if (c == 'm') {
+      else if (c == 'm') {
           DHT22_Data d;
           DHT22_Status status = DHT22_Read(&d);
 
@@ -118,6 +118,7 @@ int main(void)
               printf("Erreur : donnees corrompues\r\n");
           else
               printf("Erreur : timeout\r\n");
+      }
       }
     }
     /* USER CODE END WHILE */

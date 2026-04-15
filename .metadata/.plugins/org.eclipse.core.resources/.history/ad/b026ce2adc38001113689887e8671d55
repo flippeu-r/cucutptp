@@ -9,16 +9,36 @@
 
 /* USER CODE BEGIN Includes */
 #include "myGpioLib.h"
+#include "DHT.h"
+/* USER CODE END Includes */
+
+
+/**
+  ******************************************************************************
+  * @file           : main.c
+  * @brief          : Main program body
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2022 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* USER CODE END Header */
+/* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "usart.h"
 #include "gpio.h"
 
-#include "Dht22.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "myGpioLib.h"
-#include "DHT22.h"
-
+#include "DHT.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -107,17 +127,13 @@ int main(void)
       printf("Recu : %c\r\n", c);
 
       if (c == 'm') {
-          DHT22_Data d;
-          DHT22_Status status = DHT22_Read(&d);
-
-          if (status == DHT22_OK)
-              printf("Temp : %.1f C  Hum : %.1f %%\r\n", d.temperature, d.humidity);
-          else if (status == DHT22_ERROR_NO_RESPONSE)
-              printf("Erreur : capteur absent ou mal cable\r\n");
-          else if (status == DHT22_ERROR_CHECKSUM)
-              printf("Erreur : donnees corrompues\r\n");
-          else
-              printf("Erreur : timeout\r\n");
+          DHT_data d = DHT_getData(&dht);
+          if (d.temp == -128.0f) {
+              printf("Erreur : capteur non detecte !\r\n");
+          } else {
+              printf("Temperature : %.1f\n", d.temp);
+              printf("Humidite    : %.1f \n", d.hum);
+          }
       }
     }
     /* USER CODE END WHILE */

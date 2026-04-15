@@ -1,4 +1,5 @@
-Core/Src/DHT.o: ../Core/Src/DHT.c ../Core/Src/DHT.h ../Core/Inc/main.h \
+Core/Src/Dht22.o: ../Core/Src/Dht22.c ../Core/Src/DHT22.h \
+ ../Core/Inc/main.h \
  ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_crs.h \
  ../Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l0xx.h \
  ../Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l073xx.h \
@@ -18,7 +19,7 @@ Core/Src/DHT.o: ../Core/Src/DHT.c ../Core/Src/DHT.h ../Core/Inc/main.h \
  ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_dma.h \
  ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_usart.h \
  ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_gpio.h
-../Core/Src/DHT.h:
+../Core/Src/DHT22.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_crs.h:
 ../Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l0xx.h:

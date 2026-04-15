@@ -1,4 +1,4 @@
-"./Core/Src/DHT.o"
+"./Core/Src/Dht22.o"
 "./Core/Src/MeteoLib.o"
 "./Core/Src/gpio.o"
 "./Core/Src/main.o"
