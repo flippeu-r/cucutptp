@@ -176,6 +176,7 @@ int main(void)
   LL_USART_EnableIT_RXNE(USART2);
   LL_SYSTICK_EnableIT();
   HAL_TIM_Base_Start(&htim6);
+  HAL_ADCEx_Calibration_Start(&hadc, ADC_SINGLE_ENDED);
 
   printf("\r\n=== SYS3046 - Station Meteo ===\r\n");
   printf("Commandes : 1=LED ON, 0=LED OFF, t=Tests, d=Duree 2s, b=Blink, c=Blink 5s, v=Tick, m=Meteo\r\n\r\n");
@@ -213,12 +214,13 @@ int main(void)
 //	  printf("temperature : %f\r\n ", Temperature);
 
 
-	  LL_ADC_REG_SetSequencerChannels(ADC1, LL_ADC_CHANNEL_1);
-	  LL_ADC_REG_StartConversion(ADC1);
-	  while (!LL_ADC_IsActiveFlag_EOC(ADC1));
-	  uint16_t adc_val = LL_ADC_REG_ReadConversionData12(ADC1);
+	  /* --- Lecture photorésistance PA1 --- */
+	  HAL_ADC_Start(&hadc);
+	  HAL_ADC_PollForConversion(&hadc, 100);
+	  uint32_t adc_val = HAL_ADC_GetValue(&hadc);
+	  float tension = (adc_val / 4095.0f) * 3.3f;
 
-	  printf("Luminosite (ADC PA1) : %u\r\n", adc_val);
+	  printf("Luminosite (ADC PA1) : %4lu  |  Tension : %.2f V\r\n", adc_val, tension);
 	  HAL_Delay(500);
   }
 
