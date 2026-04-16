@@ -91,3 +91,17 @@ Finished building: default.size.stdout
  
 Finished building: STM32_uartPrintf.list
  
+08:54:39 **** Incremental Build of configuration Debug for project STM32_uartPrintf ****
+make -j12 all 
+arm-none-eabi-size  STM32_uartPrintf.elf 
+   text	   data	    bss	    dec	    hex	filename
+  31292	    476	   2068	  33836	   842c	STM32_uartPrintf.elf
+Finished building: default.size.stdout
+ 
+08:54:46 **** Incremental Build of configuration Debug for project STM32_uartPrintf ****
+make -j12 all 
+arm-none-eabi-size  STM32_uartPrintf.elf 
+   text	   data	    bss	    dec	    hex	filename
+  31292	    476	   2068	  33836	   842c	STM32_uartPrintf.elf
+Finished building: default.size.stdout
+ 
