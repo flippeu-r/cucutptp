@@ -1,10 +1,10 @@
-08:54:46 **** Incremental Build of configuration Debug for project STM32_uartPrintf ****
+10:35:04 **** Incremental Build of configuration Debug for project STM32_uartPrintf ****
 make -j12 all 
 arm-none-eabi-size  STM32_uartPrintf.elf 
    text	   data	    bss	    dec	    hex	filename
-  31292	    476	   2068	  33836	   842c	STM32_uartPrintf.elf
+  35432	    476	   2164	  38072	   94b8	STM32_uartPrintf.elf
 Finished building: default.size.stdout
  
 
-08:54:47 Build Finished. 0 errors, 0 warnings. (took 734ms)
+10:35:05 Build Finished. 0 errors, 0 warnings. (took 1s.64ms)
 
