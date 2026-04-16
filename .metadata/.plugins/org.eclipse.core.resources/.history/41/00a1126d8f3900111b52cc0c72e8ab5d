@@ -1,0 +1,155 @@
+/**
+ * @file    DHT.c
+ * @brief   Librairie pour le capteur DHT22 - SYS3046
+ *
+ *          Basé sur le code fonctionnel de main.c (protocole bit-bang).
+ *          Requiert TIM6 démarré avant le premier appel (HAL_TIM_Base_Start).
+ */
+
+#include "DHT.h"
+
+/* ------------------------------------------------------------------ */
+/*  Timer µs - déclaré dans tim.c, démarré dans main.c                 */
+/* ------------------------------------------------------------------ */
+extern TIM_HandleTypeDef htim6;
+
+/* ------------------------------------------------------------------ */
+/*  Variables internes (lecture des 5 octets DHT22)                    */
+/* ------------------------------------------------------------------ */
+static uint8_t  Rh_byte1, Rh_byte2;
+static uint8_t  Temp_byte1, Temp_byte2;
+static uint16_t RH, TEMP;
+
+/* ------------------------------------------------------------------ */
+/*  Variables publiques (accessibles depuis main.c via extern)         */
+/* ------------------------------------------------------------------ */
+float   Temperature = 0.0f;
+float   Humidity    = 0.0f;
+uint8_t Presence    = 0;
+
+/* ================================================================== */
+/*  Fonctions privées (static)                                         */
+/* ================================================================== */
+
+/**
+ * @brief  Délai en microsecondes via TIM6.
+ * @param  time  Durée en µs.
+ */
+static void delay_us(uint16_t time)
+{
+    __HAL_TIM_SET_COUNTER(&htim6, 0);
+    while (__HAL_TIM_GET_COUNTER(&htim6) < time);
+}
+
+/**
+ * @brief  Configure la broche DHT22 en sortie push-pull.
+ */
+static void Set_Pin_Output(void)
+{
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+    GPIO_InitStruct.Pin   = DHT22_PIN;
+    GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(DHT22_PORT, &GPIO_InitStruct);
+}
+
+/**
+ * @brief  Configure la broche DHT22 en entrée avec pull-up.
+ */
+static void Set_Pin_Input(void)
+{
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+    GPIO_InitStruct.Pin  = DHT22_PIN;
+    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
+    HAL_GPIO_Init(DHT22_PORT, &GPIO_InitStruct);
+}
+
+/* ================================================================== */
+/*  Fonctions publiques                                                 */
+/* ================================================================== */
+
+void DHT22_Start(void)
+{
+    Set_Pin_Output();
+    HAL_GPIO_WritePin(DHT22_PORT, DHT22_PIN, GPIO_PIN_RESET); /* LOW > 1 ms */
+    delay_us(1200);
+    HAL_GPIO_WritePin(DHT22_PORT, DHT22_PIN, GPIO_PIN_SET);   /* HIGH 20-40 µs */
+    delay_us(20);
+    Set_Pin_Input();
+}
+
+uint8_t DHT22_Check_Response(void)
+{
+    Set_Pin_Input();
+    uint8_t Response = 0;
+
+    delay_us(40);   /* attendre que le capteur tire la ligne LOW */
+
+    if (!HAL_GPIO_ReadPin(DHT22_PORT, DHT22_PIN))   /* ligne LOW : capteur présent */
+    {
+        delay_us(80);   /* attendre la remontée HIGH du capteur */
+
+        if (HAL_GPIO_ReadPin(DHT22_PORT, DHT22_PIN))
+            Response = 1;   /* réponse correcte */
+        else
+            Response = (uint8_t)(-1);   /* erreur */
+    }
+
+    /* attendre que le capteur repasse LOW avant d'envoyer les données */
+    while (HAL_GPIO_ReadPin(DHT22_PORT, DHT22_PIN));
+
+    return Response;
+}
+
+uint8_t DHT22_Read(void)
+{
+    uint8_t i = 0, j;
+
+    for (j = 0; j < 8; j++)
+    {
+        /* attendre le front montant (début du bit) */
+        while (!HAL_GPIO_ReadPin(DHT22_PORT, DHT22_PIN));
+
+        delay_us(40);   /* échantillonner à 40 µs :
+                           < 28 µs → bit = 0
+                           ~ 70 µs → bit = 1  */
+
+        if (!HAL_GPIO_ReadPin(DHT22_PORT, DHT22_PIN))
+            i &= ~(1 << (7 - j));   /* bit 0 */
+        else
+            i |=  (1 << (7 - j));   /* bit 1 */
+
+        /* attendre le front descendant (fin du bit) */
+        while (HAL_GPIO_ReadPin(DHT22_PORT, DHT22_PIN));
+    }
+
+    return i;
+}
+
+void DHT22_GetData(void)
+{
+    DHT22_Start();
+    Presence = DHT22_Check_Response();
+
+    if (Presence == 1)
+    {
+        Rh_byte1   = DHT22_Read();
+        Rh_byte2   = DHT22_Read();
+        Temp_byte1 = DHT22_Read();
+        Temp_byte2 = DHT22_Read();
+        DHT22_Read();   /* octet checksum - ignoré */
+
+        RH   = ((uint16_t)Rh_byte1   << 8) | Rh_byte2;
+        TEMP = ((uint16_t)Temp_byte1 << 8) | Temp_byte2;
+
+        /* Le bit 15 de TEMP indique un signe négatif (températures < 0°C) */
+        if (TEMP & 0x8000)
+            Temperature = -(float)((TEMP & 0x7FFF) / 10.0f);
+        else
+            Temperature = (float)(TEMP / 10.0f);
+
+        Humidity = (float)(RH / 10.0f);
+    }
+    /* Si Presence != 1, Temperature et Humidity conservent leur dernière valeur */
+}

@@ -1,0 +1,24 @@
+#ifndef DHT_H_
+#define DHT_H_
+
+#include "main.h"
+#include "gpio.h"
+#include <stdint.h>
+#include <stdio.h>
+
+/* Broche du capteur - modifiable ici */
+#define DHT22_PORT  GPIOA
+#define DHT22_PIN   LL_GPIO_PIN_1
+
+/* Variables globales accessibles depuis main.c */
+extern float Temperature;
+extern float Humidity;
+extern uint8_t Presence;
+
+/* Fonctions publiques */
+void    DHT22_Start(void);
+uint8_t DHT22_Check_Response(void);
+uint8_t DHT22_Read(void);
+void    DHT22_GetData(void);  /* fonction tout-en-un recommandée */
+
+#endif /* DHT_H_ */

@@ -9,6 +9,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "adc.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -168,6 +169,7 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM2_Init();
   MX_TIM6_Init();
+  MX_ADC_Init();
   /* USER CODE BEGIN 2 */
   RetargetInit(USART2);
   getchInit();
@@ -188,28 +190,37 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
+//
+//	  DHT22_Start();
+//	  Presence = DHT22_Check_Response();
+//	  Rh_byte1 = DHT22_Read ();
+//	  Rh_byte2 = DHT22_Read ();
+//	  Temp_byte1 = DHT22_Read ();
+//	  Temp_byte2 = DHT22_Read ();
+//	  SUM = DHT22_Read();
+//
+//	  TEMP = ((Temp_byte1<<8)|Temp_byte2);
+//	  RH = ((Rh_byte1<<8)|Rh_byte2);
+//
+//	  Temperature = (float) (TEMP/10.0);
+//	  Humidity = (float) (RH/10.0);
+//
+//
+//	  HAL_Delay(3000);
+//
+//
+//	  printf("humidité : %f\r\n ", Humidity);
+//	  printf("temperature : %f\r\n ", Temperature);
 
-	  DHT22_Start();
-	  Presence = DHT22_Check_Response();
-	  Rh_byte1 = DHT22_Read ();
-	  Rh_byte2 = DHT22_Read ();
-	  Temp_byte1 = DHT22_Read ();
-	  Temp_byte2 = DHT22_Read ();
-	  SUM = DHT22_Read();
 
-	  TEMP = ((Temp_byte1<<8)|Temp_byte2);
-	  RH = ((Rh_byte1<<8)|Rh_byte2);
+	  LL_ADC_REG_SetSequencerChannels(ADC1, LL_ADC_CHANNEL_1);
+	  LL_ADC_REG_StartConversion(ADC1);
+	  while (!LL_ADC_IsActiveFlag_EOC(ADC1));
+	  uint16_t adc_val = LL_ADC_REG_ReadConversionData12(ADC1);
 
-	  Temperature = (float) (TEMP/10.0);
-	  Humidity = (float) (RH/10.0);
-
-
-	  HAL_Delay(3000);
-
-
-	  printf("humidité : %f\r\n ", Humidity);
-	  printf("temperature : %f\r\n ", Temperature);
- }
+	  printf("Luminosite (ADC PA1) : %u\r\n", adc_val);
+	  HAL_Delay(500);
+  }
 
 
   /* USER CODE END 3 */
