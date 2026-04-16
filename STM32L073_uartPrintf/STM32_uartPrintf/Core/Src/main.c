@@ -9,6 +9,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "adc.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -168,6 +169,7 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM2_Init();
   MX_TIM6_Init();
+  MX_ADC_Init();
   /* USER CODE BEGIN 2 */
   RetargetInit(USART2);
   getchInit();

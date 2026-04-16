@@ -5496,10 +5496,10 @@ void MX_ADC_Init(void)
  8002b5e:	4b21      	ldr	r3, [pc, #132]	@ (8002be4 <MX_ADC_Init+0xc0>)
  8002b60:	2200      	movs	r2, #0
  8002b62:	60da      	str	r2, [r3, #12]
-  hadc.Init.ContinuousConvMode = ENABLE;
+  hadc.Init.ContinuousConvMode = DISABLE;
  8002b64:	4b1f      	ldr	r3, [pc, #124]	@ (8002be4 <MX_ADC_Init+0xc0>)
  8002b66:	2220      	movs	r2, #32
- 8002b68:	2101      	movs	r1, #1
+ 8002b68:	2100      	movs	r1, #0
  8002b6a:	5499      	strb	r1, [r3, r2]
   hadc.Init.DiscontinuousConvMode = DISABLE;
  8002b6c:	4b1d      	ldr	r3, [pc, #116]	@ (8002be4 <MX_ADC_Init+0xc0>)
@@ -5553,7 +5553,7 @@ void MX_ADC_Init(void)
 
   /** Configure for the selected ADC regular channel to be converted.
   */
-  sConfig.Channel = ADC_CHANNEL_1;
+  sConfig.Channel = ADC_CHANNEL_4;
  8002bb8:	003b      	movs	r3, r7
  8002bba:	4a0c      	ldr	r2, [pc, #48]	@ (8002bec <MX_ADC_Init+0xc8>)
  8002bbc:	601a      	str	r2, [r3, #0]
@@ -5586,7 +5586,7 @@ void MX_ADC_Init(void)
  8002be2:	46c0      	nop			@ (mov r8, r8)
  8002be4:	200001f0 	.word	0x200001f0
  8002be8:	40012400 	.word	0x40012400
- 8002bec:	04000002 	.word	0x04000002
+ 8002bec:	10000010 	.word	0x10000010
 
 08002bf0 <HAL_ADC_MspInit>:
 
@@ -5639,11 +5639,11 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
  8002c34:	60bb      	str	r3, [r7, #8]
  8002c36:	68bb      	ldr	r3, [r7, #8]
     /**ADC GPIO Configuration
-    PA1     ------> ADC_IN1
+    PA4     ------> ADC_IN4
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_1;
+    GPIO_InitStruct.Pin = GPIO_PIN_4;
  8002c38:	193b      	adds	r3, r7, r4
- 8002c3a:	2202      	movs	r2, #2
+ 8002c3a:	2210      	movs	r2, #16
  8002c3c:	601a      	str	r2, [r3, #0]
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
  8002c3e:	193b      	adds	r3, r7, r4
