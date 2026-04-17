@@ -215,32 +215,40 @@ int main(void)
 //	  printf("humidité : %f\r\n ", Humidity);
 //	  printf("temperature : %f\r\n ", Temperature);
 
+	  while (1)
+	  {
+	    /* USER CODE END WHILE */
+	    /* USER CODE BEGIN 3 */
 
-	  /* --- Lecture photorésistance PA1 --- */
-	  HAL_ADC_Start(&hadc);
-	  HAL_ADC_PollForConversion(&hadc, 100);
-	  uint32_t adc_val = HAL_ADC_GetValue(&hadc);
-	  float tension = (adc_val / 4095.0f) * 3.3f;
+	    // DHT22 commenté ...
 
-	  printf("Luminosite (ADC PA1) : %4lu  |  Tension : %.2f V\r\n", adc_val, tension);
+	    /* --- Lecture photorésistance PA1 : moyenne sur 10 mesures --- */
+	    uint32_t somme = 0;
+	    for (int i = 0; i < 10; i++) {
+	        HAL_ADC_Start(&hadc);
+	        HAL_ADC_PollForConversion(&hadc, 100);
+	        somme += HAL_ADC_GetValue(&hadc);
+	    }
+	    uint32_t adc_val = somme / 10;
+	    float tension = (adc_val / 4095.0f) * 3.3f;
+	    printf("Luminosite : %4lu  |  Tension : %.2f V\r\n", adc_val, tension);
 
-	  /* --- LED selon luminosité --- */
-	  if (adc_val > 100) {
-		  printf("la led est allumée, youhouuuuuuuuu");
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);   // LED allumée
-	  } else {
-	      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); // LED éteinte
-	      printf("la led est éteinte\n %4lu \n",adc_val);
+	    /* --- LED allumée si obscurité (valeur > 600) --- */
+	    if (adc_val > 600) {
+	        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
+	        printf("LED ON  -> obscurite detectee\r\n");
+	    } else {
+	        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
+	        printf("LED OFF -> lumiere detectee\r\n");
+	    }
+
+	    /* --- Lecture DHT22 PA0 --- */
+	    DHT22_GetData();
+	    printf("Temperature : %.1f C  |  Humidite : %.1f %%\r\n", Temperature, Humidity);
+
+	    HAL_Delay(2000);
+	    printf("\r\n");
 	  }
-
-	  /* --- Lecture DHT22 PA0 --- */
-	  DHT22_GetData();
-	  printf("Temperature : %.1f C  |  Humidite : %.1f %%\r\n", Temperature, Humidity);
-
-
-
-	  HAL_Delay(2000);
-	  printf(" \n");
   }
 
 

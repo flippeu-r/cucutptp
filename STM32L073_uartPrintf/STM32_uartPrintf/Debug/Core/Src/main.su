@@ -16,6 +16,6 @@
 ../Core/Src/main.c:55:6:delay	16	static
 ../Core/Src/main.c:72:6:Set_Pin_Output	48	static
 ../Core/Src/main.c:81:6:Set_Pin_Input	48	static
-../Core/Src/main.c:149:5:main	32	static
-../Core/Src/main.c:254:6:SystemClock_Config	8	static
-../Core/Src/main.c:299:6:Error_Handler	8	static,ignoring_inline_asm
+../Core/Src/main.c:149:5:main	40	static
+../Core/Src/main.c:262:6:SystemClock_Config	8	static
+../Core/Src/main.c:307:6:Error_Handler	8	static,ignoring_inline_asm
