@@ -8,7 +8,14 @@ double getTemp()
 
 void faireTournerVentilo(bool run)
 {
-
+	if(run)
+	{
+		LL_TIM_OC_SetCompareCH1(TIM22, 1000);
+	}
+	else
+	{
+		LL_TIM_OC_SetCompareCH1(TIM22, 500);
+	}
 }
 
 void setTemp(double temp){
@@ -17,6 +24,7 @@ void setTemp(double temp){
 
 void checkTemp(void){
 	getTemp();
+	printf("Il fait actuellement %.1f C |  Humidite : %.1f %%\r\n", Temperature, Humidity);
 	if(Temperature > tempRef)
 	{
 		printf("IL FAIT TARPIN CHAAAAUUUUUUD \n");

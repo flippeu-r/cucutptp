@@ -21,7 +21,7 @@
 #include <getch.h>
 #include "myGpioLib.h"
 #include "DHT.h"
-
+#include "MeteoLib.h"
 
 /* USER CODE END Includes */
 
@@ -186,21 +186,18 @@ int main(void)
 
 
   printf("\r\n=== SYS3046 - Station Meteo ===\r\n");
-  printf("Commandes : 1=LED ON, 0=LED OFF, t=Tests, d=Duree 2s, b=Blink, c=Blink 5s, v=Tick, m=Meteo\r\n\r\n");
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
+  setTemp(23.0);
 	  while (1)
 	  {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		  LL_TIM_OC_SetCompareCH2(TIM22, 2000);
-		  LL_mDelay(500); // pause au min
-		  LL_TIM_OC_SetCompareCH2(TIM22, 500);
-	    // DHT22 commenté ...
+		  checkTemp();
+
 
 	    /* --- Lecture photorésistance PA1 : moyenne sur 10 mesures --- */
 	    uint32_t somme = 0;
@@ -214,17 +211,13 @@ int main(void)
 	    printf("Luminosite : %4lu  |  Tension : %.2f V\r\n", adc_val, tension);
 
 	    /* --- LED allumée si obscurité (valeur > 600) --- */
-	    if (adc_val > 50) {
+	    if (adc_val > 1000) {
 	        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
 	        printf("LED ON  -> obscurite detectee\r\n");
 	    } else {
 	        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
 	        printf("LED OFF -> lumiere detectee\r\n");
 	    }
-
-	    /* --- Lecture DHT22 PA0 --- */
-	    DHT22_GetData();
-	    printf("Temperature : %.1f C  |  Humidite : %.1f %%\r\n", Temperature, Humidity);
 
 	    HAL_Delay(2000);
 	    printf("\r\n");

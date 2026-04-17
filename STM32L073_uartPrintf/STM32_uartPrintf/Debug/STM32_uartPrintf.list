@@ -6682,22 +6682,22 @@ __STATIC_INLINE void LL_TIM_CC_EnableChannel(TIM_TypeDef *TIMx, uint32_t Channel
  800325e:	b002      	add	sp, #8
  8003260:	bd80      	pop	{r7, pc}
 
-08003262 <LL_TIM_OC_SetCompareCH2>:
+08003262 <LL_TIM_OC_SetCompareCH1>:
   * @param  TIMx Timer instance
   * @param  CompareValue between Min_Data=0 and Max_Data=65535
   * @retval None
   */
-__STATIC_INLINE void LL_TIM_OC_SetCompareCH2(TIM_TypeDef *TIMx, uint32_t CompareValue)
+__STATIC_INLINE void LL_TIM_OC_SetCompareCH1(TIM_TypeDef *TIMx, uint32_t CompareValue)
 {
  8003262:	b580      	push	{r7, lr}
  8003264:	b082      	sub	sp, #8
  8003266:	af00      	add	r7, sp, #0
  8003268:	6078      	str	r0, [r7, #4]
  800326a:	6039      	str	r1, [r7, #0]
-  WRITE_REG(TIMx->CCR2, CompareValue);
+  WRITE_REG(TIMx->CCR1, CompareValue);
  800326c:	687b      	ldr	r3, [r7, #4]
  800326e:	683a      	ldr	r2, [r7, #0]
- 8003270:	639a      	str	r2, [r3, #56]	@ 0x38
+ 8003270:	635a      	str	r2, [r3, #52]	@ 0x34
 }
  8003272:	46c0      	nop			@ (mov r8, r8)
  8003274:	46bd      	mov	sp, r7
@@ -6847,25 +6847,25 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		  LL_TIM_OC_SetCompareCH2(TIM22, 2000);
+		  LL_TIM_OC_SetCompareCH1(TIM22, 1000);
  800332e:	23fa      	movs	r3, #250	@ 0xfa
- 8003330:	00db      	lsls	r3, r3, #3
+ 8003330:	009b      	lsls	r3, r3, #2
  8003332:	4a47      	ldr	r2, [pc, #284]	@ (8003450 <main+0x198>)
  8003334:	0019      	movs	r1, r3
  8003336:	0010      	movs	r0, r2
- 8003338:	f7ff ff93 	bl	8003262 <LL_TIM_OC_SetCompareCH2>
+ 8003338:	f7ff ff93 	bl	8003262 <LL_TIM_OC_SetCompareCH1>
 		  LL_mDelay(500); // pause au min
  800333c:	23fa      	movs	r3, #250	@ 0xfa
  800333e:	005b      	lsls	r3, r3, #1
  8003340:	0018      	movs	r0, r3
  8003342:	f002 fedf 	bl	8006104 <LL_mDelay>
-		  LL_TIM_OC_SetCompareCH2(TIM22, 500);
+		  LL_TIM_OC_SetCompareCH1(TIM22, 500);
  8003346:	23fa      	movs	r3, #250	@ 0xfa
  8003348:	005b      	lsls	r3, r3, #1
  800334a:	4a41      	ldr	r2, [pc, #260]	@ (8003450 <main+0x198>)
  800334c:	0019      	movs	r1, r3
  800334e:	0010      	movs	r0, r2
- 8003350:	f7ff ff87 	bl	8003262 <LL_TIM_OC_SetCompareCH2>
+ 8003350:	f7ff ff87 	bl	8003262 <LL_TIM_OC_SetCompareCH1>
 	    // DHT22 commenté ...
 
 	    /* --- Lecture photorésistance PA1 : moyenne sur 10 mesures --- */
