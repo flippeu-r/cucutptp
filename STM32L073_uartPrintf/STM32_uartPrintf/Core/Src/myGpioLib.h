@@ -33,6 +33,10 @@ extern volatile uint32_t get_tick;
 
 
 // ----------------------//
+/**
+ * @brief Allume la LED2 pendant une durée donnée  // ➕
+ * @param duration_100ms durée en 1/10s (ex: 20 = 2 secondes)  // ➕
+ */
 void LED2_On_Duration(uint32_t duration_100ms);
 /**
  * @brief Ecrit l'état logique d'une sortie du port A
