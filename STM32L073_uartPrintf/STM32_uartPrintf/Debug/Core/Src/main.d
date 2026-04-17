@@ -40,7 +40,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_gpio.h \
  ../Core/Inc/adc.h ../Core/Inc/main.h ../Core/Inc/tim.h \
  ../Core/Inc/usart.h ../Core/Inc/gpio.h ../Core/Inc/retarget.h \
- ../Core/Inc/getch.h ../Core/Src/myGpioLib.h
+ ../Core/Inc/getch.h ../Core/Src/myGpioLib.h ../Core/Src/DHT.h
 ../Core/Inc/main.h:
 ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal.h:
 ../Core/Inc/stm32l0xx_hal_conf.h:
@@ -89,3 +89,4 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/retarget.h:
 ../Core/Inc/getch.h:
 ../Core/Src/myGpioLib.h:
+../Core/Src/DHT.h:

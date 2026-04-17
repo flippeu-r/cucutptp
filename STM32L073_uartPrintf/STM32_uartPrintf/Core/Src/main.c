@@ -20,6 +20,7 @@
 #include <retarget.h>
 #include <getch.h>
 #include "myGpioLib.h"
+#include "DHT.h"
 
 
 /* USER CODE END Includes */
@@ -225,9 +226,11 @@ int main(void)
 
 	  /* --- LED selon luminosité --- */
 	  if (adc_val > 100) {
-	      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);   // LED allumée
+		  printf("la led est allumée, youhouuuuuuuuu");
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);   // LED allumée
 	  } else {
 	      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); // LED éteinte
+	      printf("la led est éteinte\n %4lu \n",adc_val);
 	  }
 
 	  /* --- Lecture DHT22 PA0 --- */
