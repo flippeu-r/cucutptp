@@ -223,7 +223,17 @@ int main(void)
 	  float tension = (adc_val / 4095.0f) * 3.3f;
 
 	  printf("Luminosite (ADC PA1) : %4lu  |  Tension : %.2f V\r\n", adc_val, tension);
-	  HAL_Delay(500);
+
+
+
+	  /* --- Lecture DHT22 PA0 --- */
+	  DHT22_GetData();
+	  printf("Temperature : %.1f C  |  Humidite : %.1f %%\r\n", Temperature, Humidity);
+
+
+
+	  HAL_Delay(2000);
+	  printf(" \n");
   }
 
 
