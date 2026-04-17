@@ -172,6 +172,8 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM6_Init();
   MX_ADC_Init();
+  MX_TIM3_Init();
+  MX_TIM22_Init();
   /* USER CODE BEGIN 2 */
   RetargetInit(USART2);
   getchInit();
@@ -179,6 +181,9 @@ int main(void)
   LL_SYSTICK_EnableIT();
   HAL_TIM_Base_Start(&htim6);
   HAL_ADCEx_Calibration_Start(&hadc, ADC_SINGLE_ENDED);
+  LL_TIM_CC_EnableChannel(TIM22, LL_TIM_CHANNEL_CH1); // CH2 car PWM Gen CH2
+  LL_TIM_EnableCounter(TIM22);
+
 
   printf("\r\n=== SYS3046 - Station Meteo ===\r\n");
   printf("Commandes : 1=LED ON, 0=LED OFF, t=Tests, d=Duree 2s, b=Blink, c=Blink 5s, v=Tick, m=Meteo\r\n\r\n");
@@ -186,40 +191,15 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
-
-//
-//	  DHT22_Start();
-//	  Presence = DHT22_Check_Response();
-//	  Rh_byte1 = DHT22_Read ();
-//	  Rh_byte2 = DHT22_Read ();
-//	  Temp_byte1 = DHT22_Read ();
-//	  Temp_byte2 = DHT22_Read ();
-//	  SUM = DHT22_Read();
-//
-//	  TEMP = ((Temp_byte1<<8)|Temp_byte2);
-//	  RH = ((Rh_byte1<<8)|Rh_byte2);
-//
-//	  Temperature = (float) (TEMP/10.0);
-//	  Humidity = (float) (RH/10.0);
-//
-//
-//	  HAL_Delay(3000);
-//
-//
-//	  printf("humidité : %f\r\n ", Humidity);
-//	  printf("temperature : %f\r\n ", Temperature);
 
 	  while (1)
 	  {
-	    /* USER CODE END WHILE */
-	    /* USER CODE BEGIN 3 */
+    /* USER CODE END WHILE */
 
+    /* USER CODE BEGIN 3 */
+		  LL_TIM_OC_SetCompareCH2(TIM22, 2000);
+		  LL_mDelay(500); // pause au min
+		  LL_TIM_OC_SetCompareCH2(TIM22, 500);
 	    // DHT22 commenté ...
 
 	    /* --- Lecture photorésistance PA1 : moyenne sur 10 mesures --- */
@@ -234,7 +214,7 @@ int main(void)
 	    printf("Luminosite : %4lu  |  Tension : %.2f V\r\n", adc_val, tension);
 
 	    /* --- LED allumée si obscurité (valeur > 600) --- */
-	    if (adc_val > 600) {
+	    if (adc_val > 50) {
 	        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
 	        printf("LED ON  -> obscurite detectee\r\n");
 	    } else {
@@ -249,9 +229,6 @@ int main(void)
 	    HAL_Delay(2000);
 	    printf("\r\n");
 	  }
-  }
-
-
   /* USER CODE END 3 */
 }
 

@@ -1,28 +1,26 @@
-
-
 #ifndef METEOLIB_H_
 #define METEOLIB_H_
 
-#include <stdint.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include "DHT.h"
+
+extern float tempRef;
+#define TEMP_ADC_CHANNEL  0
 
 
-#define TEMP_ADC_CHANNEL  0   
-
-/* ---- Variable globale capteur ---- */
-extern double g_temperature;
+double getTemp(void);
 
 
-double capteurTemp(double temp);
-
-
-void faireTourner(bool run);
+void faireTournerVentilo(bool run);
 
 
 void setTemp(double temp);
 
 /**
- * @brief Vérifie la température et affiche une alerte si hors limites
+ * @brief Vérifie la température et affiche une alerte si hors limites et allume le ventilo
  */
 void checkTemp(void);
 
 #endif /* METEOLIB_H_ */
+

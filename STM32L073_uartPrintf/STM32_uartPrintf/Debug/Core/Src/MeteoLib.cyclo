@@ -1,0 +1,4 @@
+../Core/Src/MeteoLib.c:4:8:getTemp	1
+../Core/Src/MeteoLib.c:9:6:faireTournerVentilo	1
+../Core/Src/MeteoLib.c:14:6:setTemp	1
+../Core/Src/MeteoLib.c:18:6:checkTemp	2
