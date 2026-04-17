@@ -309,7 +309,7 @@ __weak uint32_t HAL_GetTick(void)
 
 /**
   * @brief This function returns a tick priority.
-  * @retval tick priority
+  * @retval tick priority24.6 C
   */
 uint32_t HAL_GetTickPrio(void)
 {

@@ -1,6 +1,7 @@
 #include "MeteoLib.h"
 #include "stm32l0xx_ll_tim.h"
 
+float tempRef;
 double getTemp()
 {
 	DHT22_GetData();

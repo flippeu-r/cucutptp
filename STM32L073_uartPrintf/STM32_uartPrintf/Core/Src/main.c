@@ -190,7 +190,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  setTemp(23.0);
+  setTemp(25.5);
 	  while (1)
 	  {
     /* USER CODE END WHILE */

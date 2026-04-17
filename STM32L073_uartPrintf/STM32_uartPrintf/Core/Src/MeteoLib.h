@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include "DHT.h"
 
-extern float tempRef;
+
 #define TEMP_ADC_CHANNEL  0
 
 
