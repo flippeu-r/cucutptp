@@ -5,7 +5,6 @@
 #include <stdbool.h>
 #include "DHT.h"
 
-extern float tempRef;
 #define TEMP_ADC_CHANNEL  0
 
 
@@ -15,8 +14,9 @@ double getTemp(void);
 void faireTournerVentilo(bool run);
 
 
-void setTemp(double temp);
+void setTempRef(float temp);
 
+float getTempRef(void);
 /**
  * @brief Vérifie la température et affiche une alerte si hors limites et allume le ventilo
  */

@@ -190,41 +190,66 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  setTemp(23.0);
-	  while (1)
-	  {
+  setTempRef(27.0);
+  while (1)
+  {
     /* USER CODE END WHILE */
-
+	  printf("tempérqture de référence actuelle : %.1f, flèche du haut/bas pour l'augmenter/la baisserC\r\n");
     /* USER CODE BEGIN 3 */
-		  checkTemp();
+	  if (kbhit())
+	  {
+	      uint8_t c = getch();
 
-
-	    /* --- Lecture photorésistance PA1 : moyenne sur 10 mesures --- */
-	    uint32_t somme = 0;
-	    for (int i = 0; i < 10; i++) {
-	        HAL_ADC_Start(&hadc);
-	        HAL_ADC_PollForConversion(&hadc, 100);
-	        somme += HAL_ADC_GetValue(&hadc);
-	    }
-	    uint32_t adc_val = somme / 10;
-	    float tension = (adc_val / 4095.0f) * 3.3f;
-	    printf("Luminosite : %4lu  |  Tension : %.2f V\r\n", adc_val, tension);
-
-	    /* --- LED allumée si obscurité (valeur > 600) --- */
-	    if (adc_val > 1000) {
-	        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
-	        printf("LED ON  -> obscurite detectee\r\n");
-	    } else {
-	        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
-	        printf("LED OFF -> lumiere detectee\r\n");
-	    }
-
-	    HAL_Delay(2000);
-	    printf("\r\n");
+	      if (c == 0x1B)
+	      {           // début séquence flèche
+	          uint8_t c2 = getch();  // doit être '['
+	          uint8_t c3 = getch();  // direction
+	          float tempRef = getTempRef();
+	          if (c2 == 0x5B)
+	          {
+	              if (c3 == 0x41)
+	              {          // flèche HAUT
+	                  setTempRef(tempRef++);
+	                  printf("tempRef augmentee : %.1f C\r\n", tempRef);
+	              }
+	              else if (c3 == 0x42)
+	              {     // flèche BAS
+	            	  setTempRef(tempRef--);
+	                  printf("tempRef diminuee : %.1f C\r\n", tempRef);
+	              }
+	          }
+	      }
 	  }
-  /* USER CODE END 3 */
-}
+		  checkTemp();
+		  /* --- Lecture photorésistance PA1 : moyenne sur 10 mesures --- */
+		  uint32_t somme = 0;
+		  for (int i = 0; i < 10; i++)
+		  {
+			  HAL_ADC_Start(&hadc);
+		      HAL_ADC_PollForConversion(&hadc, 100);
+		      somme += HAL_ADC_GetValue(&hadc);
+		  }
+		  uint32_t adc_val = somme / 10;
+		  float tension = (adc_val / 4095.0f) * 3.3f;
+		  printf("Luminosite : %4lu  |  Tension : %.2f V\r\n", adc_val, tension);
 
+		  /* --- LED allumée si obscurité (valeur > 600) --- */
+		  if (adc_val > 1000)
+		  {
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
+			  printf("LED ON  -> obscurite detectee\r\n");
+		  }
+		  else
+		  {
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
+		      printf("LED OFF -> lumiere detectee\r\n");
+		  }
+
+		  	    HAL_Delay(2000);
+		  	    printf("\r\n");
+
+}
+  /* USER CODE END 3 */
 /**
   * @brief System Clock Configuration
   * @retval None

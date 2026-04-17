@@ -1,6 +1,7 @@
 #include "MeteoLib.h"
 #include "stm32l0xx_ll_tim.h"
 
+float tempRef;
 double getTemp()
 {
 	DHT22_GetData();
@@ -18,8 +19,12 @@ void faireTournerVentilo(bool run)
 	}
 }
 
-void setTemp(double temp){
+void setTempRef(float temp){
 	tempRef = temp;
+}
+
+float getTempRef(void){
+	return tempRef;
 }
 
 void checkTemp(void){
