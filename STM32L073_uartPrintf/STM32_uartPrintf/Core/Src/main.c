@@ -1,12 +1,25 @@
 /* USER CODE BEGIN Header */
 /**
- * @mainpage  SYS3046 course template
+ * @mainpage  SYS3046 - Station Météo
  *
- *            Implémentation de notre librairie MyGpioLib.c permettant de lire/écrire
- *            l'état de différentes sorties et le clignotement d'une led.
- *            Station météo avec capteur DHT22.
+ * @brief     Projet embarqué sur STM32L073RZ (NUCLEO-L073RZ).
+ *
+ *            Ce projet implémente une station météo complète utilisant :
+ *            - Le capteur DHT22 (PA0) pour la température et l'humidité
+ *            - La photorésistance (PA1, ADC) pour la luminosité
+ *            - Une LED (PA6) qui s'allume en cas d'obscurité
+ *            - Un servomoteur (PB4, TIM22 PWM) piloté par MeteoLib
+ *            - Une interface série (UART2, 115200 baud) via PuTTY
+ *
+ *            L'utilisateur peut modifier la température de référence
+ *            en temps réel via les flèches ↑ / ↓ du clavier.
+ *
+ * @author    Pierre
+ * @date      2026
+ * @version   1.0
  */
 /* USER CODE END Header */
+
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
@@ -22,7 +35,6 @@
 #include "myGpioLib.h"
 #include "DHT.h"
 #include "MeteoLib.h"
-
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -31,6 +43,14 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+/** @brief Seuil ADC au-dessus duquel on considère qu'il fait nuit (0-4095) */
+#define SEUIL_OBSCURITE     50U
+
+/** @brief Température de référence initiale en °C */
+#define TEMP_REF_INITIALE   27.0f
+
+/** @brief Nombre de mesures ADC pour le calcul de la moyenne */
+#define ADC_NB_MESURES      10U
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -40,133 +60,123 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+/** @brief Compteur de temps système en millisecondes (incrémenté par SysTick) */
 extern volatile uint32_t get_tick;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
+static void traiterClavier(void);
+static uint32_t lireLuminosite(void);
+static void gererLED(uint32_t adc_val);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-
-void delay (uint16_t time)
+/**
+ * @brief  Délai en microsecondes basé sur TIM6.
+ * @param  time Durée en microsecondes
+ */
+void delay(uint16_t time)
 {
-	/* change your code here for the delay in microseconds */
-	__HAL_TIM_SET_COUNTER(&htim6, 0);
-	while ((__HAL_TIM_GET_COUNTER(&htim6))<time);
+    __HAL_TIM_SET_COUNTER(&htim6, 0);
+    while ((__HAL_TIM_GET_COUNTER(&htim6)) < time);
 }
 
-
-
-
-uint8_t Rh_byte1, Rh_byte2, Temp_byte1, Temp_byte2;
-uint16_t SUM, RH, TEMP;
-
-//float Temperature = 0;
-//float Humidity = 0;
-//uint8_t Presence = 0;
-
-void Set_Pin_Output (GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
+/**
+ * @brief  Gère la saisie clavier pour modifier la température de référence.
+ *         Les flèches ↑ / ↓ augmentent ou diminuent tempRef de 1°C.
+ *         Séquence d'échappement : 0x1B 0x5B 0x41 (haut) / 0x42 (bas).
+ */
+static void traiterClavier(void)
 {
-	GPIO_InitTypeDef GPIO_InitStruct = {0};
-	GPIO_InitStruct.Pin = GPIO_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
+    if (!kbhit()) return;
+
+    uint8_t c = getch();
+
+    if (c == 0x1B)
+    {
+        uint8_t c2 = getch();
+        uint8_t c3 = getch();
+
+        if (c2 == 0x5B)
+        {
+            float ref = getTempRef();
+
+            if (c3 == 0x41)      /* flèche HAUT */
+            {
+                setTempRef(ref + 1.0f);
+                printf(">> TempRef augmentee : %.1f C\r\n", getTempRef());
+            }
+            else if (c3 == 0x42) /* flèche BAS */
+            {
+                setTempRef(ref - 1.0f);
+                printf(">> TempRef diminuee  : %.1f C\r\n", getTempRef());
+            }
+        }
+    }
 }
 
-void Set_Pin_Input (GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
+/**
+ * @brief  Lit la luminosité via l'ADC sur PA1 (moyenne sur ADC_NB_MESURES).
+ * @return Valeur ADC moyenne (0 = très lumineux, 4095 = obscurité totale)
+ */
+static uint32_t lireLuminosite(void)
 {
-	GPIO_InitTypeDef GPIO_InitStruct = {0};
-	GPIO_InitStruct.Pin = GPIO_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
+    uint32_t somme = 0;
+    for (int i = 0; i < ADC_NB_MESURES; i++)
+    {
+        HAL_ADC_Start(&hadc);
+        HAL_ADC_PollForConversion(&hadc, 100);
+        somme += HAL_ADC_GetValue(&hadc);
+    }
+    return somme / ADC_NB_MESURES;
 }
 
-/*********************************** DHT22 FUNCTIONS ****************************************/
-
-#define DHT22_PORT GPIOA
-#define DHT22_PIN GPIO_PIN_0
-//
-//void DHT22_Start (void)
-//{
-//	Set_Pin_Output(DHT22_PORT, DHT22_PIN); // set the pin as output
-//	HAL_GPIO_WritePin (DHT22_PORT, DHT22_PIN, 0);   // pull the pin low
-//	delay(1200);   // wait for > 1ms
-//
-//	HAL_GPIO_WritePin (DHT22_PORT, DHT22_PIN, 1);   // pull the pin high
-//	delay (20);   // wait for 30us
-//
-//	Set_Pin_Input(DHT22_PORT, DHT22_PIN);   // set as input
-//}
-//
-//uint8_t DHT22_Check_Response (void)
-//{
-//	Set_Pin_Input(DHT22_PORT, DHT22_PIN);   // set as input
-//	uint8_t Response = 0;
-//	delay (40);  // wait for 40us
-//	if (!(HAL_GPIO_ReadPin (DHT22_PORT, DHT22_PIN))) // if the pin is low
-//	{
-//		delay (80);   // wait for 80us
-//
-//		if ((HAL_GPIO_ReadPin (DHT22_PORT, DHT22_PIN))) Response = 1;  // if the pin is high, response is ok
-//		else Response = -1;
-//	}
-//
-//	while ((HAL_GPIO_ReadPin (DHT22_PORT, DHT22_PIN)));   // wait for the pin to go low
-//	return Response;
-//}
-//
-//uint8_t DHT22_Read (void)
-//{
-//	uint8_t i,j;
-//	for (j=0;j<8;j++)
-//	{
-//		while (!(HAL_GPIO_ReadPin (DHT22_PORT, DHT22_PIN)));   // wait for the pin to go high
-//		delay (40);   // wait for 40 us
-//
-//		if (!(HAL_GPIO_ReadPin (DHT22_PORT, DHT22_PIN)))   // if the pin is low
-//		{
-//			i&= ~(1<<(7-j));   // write 0
-//		}
-//		else i|= (1<<(7-j));  // if the pin is high, write 1
-//		while ((HAL_GPIO_ReadPin (DHT22_PORT, DHT22_PIN)));  // wait for the pin to go low
-//	}
-//
-//	return i;
-//}
+/**
+ * @brief  Pilote la LED PA6 selon la luminosité mesurée.
+ *         LED allumée si adc_val > SEUIL_OBSCURITE (obscurité détectée).
+ * @param  adc_val Valeur ADC moyenne issue de lireLuminosite()
+ */
+static void gererLED(uint32_t adc_val)
+{
+    if (adc_val > SEUIL_OBSCURITE)
+    {
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
+        printf("LED ON  -> obscurite detectee\r\n");
+    }
+    else
+    {
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
+        printf("LED OFF -> lumiere detectee\r\n");
+    }
+}
 
 /* USER CODE END 0 */
 
 /**
-  * @brief  The application entry point.
-  * @retval int
-  */
+ * @brief  Point d'entrée de l'application.
+ * @retval int
+ */
 int main(void)
 {
-
   /* USER CODE BEGIN 1 */
   /* USER CODE END 1 */
 
-  /* MCU Configuration--------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  /* MCU Configuration -------------------------------------------------------*/
   HAL_Init();
 
   /* USER CODE BEGIN Init */
   /* USER CODE END Init */
 
-  /* Configure the system clock */
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
   /* USER CODE END SysInit */
 
-  /* Initialize all configured peripherals */
+  /* Initialisation des périphériques ----------------------------------------*/
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   MX_TIM2_Init();
@@ -174,82 +184,62 @@ int main(void)
   MX_ADC_Init();
   MX_TIM3_Init();
   MX_TIM22_Init();
+
   /* USER CODE BEGIN 2 */
+
+  /* --- Communication série --- */
   RetargetInit(USART2);
   getchInit();
   LL_USART_EnableIT_RXNE(USART2);
+
+  /* --- Timers et ADC --- */
   LL_SYSTICK_EnableIT();
   HAL_TIM_Base_Start(&htim6);
   HAL_ADCEx_Calibration_Start(&hadc, ADC_SINGLE_ENDED);
-  LL_TIM_CC_EnableChannel(TIM22, LL_TIM_CHANNEL_CH1); // CH2 car PWM Gen CH2
+
+  /* --- Servomoteur TIM22 CH1 sur PB4 --- */
+  LL_TIM_CC_EnableChannel(TIM22, LL_TIM_CHANNEL_CH1);
   LL_TIM_EnableCounter(TIM22);
 
+  /* --- Température de référence initiale --- */
+  setTempRef(TEMP_REF_INITIALE);
 
+  /* --- Message de bienvenue --- */
   printf("\r\n=== SYS3046 - Station Meteo ===\r\n");
+  printf("Fleches haut/bas : modifier la temperature de reference\r\n\r\n");
+
   /* USER CODE END 2 */
 
-  /* Infinite loop */
+  /* Boucle principale -------------------------------------------------------*/
   /* USER CODE BEGIN WHILE */
-  setTempRef(27.0);
   while (1)
   {
     /* USER CODE END WHILE */
-	  printf("tempérqture de référence actuelle : %.1f, flèche du haut/bas pour l'augmenter/la baisserC\r\n");
     /* USER CODE BEGIN 3 */
-	  if (kbhit())
-	  {
-	      uint8_t c = getch();
 
-	      if (c == 0x1B)
-	      {           // début séquence flèche
-	          uint8_t c2 = getch();  // doit être '['
-	          uint8_t c3 = getch();  // direction
-	          float tempRef = getTempRef();
-	          if (c2 == 0x5B)
-	          {
-	              if (c3 == 0x41)
-	              {          // flèche HAUT
-	                  setTempRef(tempRef++);
-	                  printf("tempRef augmentee : %.1f C\r\n", tempRef);
-	              }
-	              else if (c3 == 0x42)
-	              {     // flèche BAS
-	            	  setTempRef(tempRef--);
-	                  printf("tempRef diminuee : %.1f C\r\n", tempRef);
-	              }
-	          }
-	      }
-	  }
-		  checkTemp();
-		  /* --- Lecture photorésistance PA1 : moyenne sur 10 mesures --- */
-		  uint32_t somme = 0;
-		  for (int i = 0; i < 10; i++)
-		  {
-			  HAL_ADC_Start(&hadc);
-		      HAL_ADC_PollForConversion(&hadc, 100);
-		      somme += HAL_ADC_GetValue(&hadc);
-		  }
-		  uint32_t adc_val = somme / 10;
-		  float tension = (adc_val / 4095.0f) * 3.3f;
-		  printf("Luminosite : %4lu  |  Tension : %.2f V\r\n", adc_val, tension);
+    /* --- Affichage de la température de référence courante --- */
+    printf("-- TempRef : %.1f C  |  Fleche haut/bas pour modifier --\r\n",
+           getTempRef());
 
-		  /* --- LED allumée si obscurité (valeur > 600) --- */
-		  if (adc_val > 1000)
-		  {
-			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
-			  printf("LED ON  -> obscurite detectee\r\n");
-		  }
-		  else
-		  {
-			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
-		      printf("LED OFF -> lumiere detectee\r\n");
-		  }
+    /* --- Gestion du clavier (modification tempRef) --- */
+    traiterClavier();
 
-		  	    HAL_Delay(2000);
-		  	    printf("\r\n");
+    /* --- Lecture et affichage température / humidité + pilotage servo --- */
+    checkTemp();
 
-}
+    /* --- Lecture luminosité et pilotage LED --- */
+    uint32_t adc_val = lireLuminosite();
+    float tension = (adc_val / 4095.0f) * 3.3f;
+    printf("Luminosite : %4lu  |  Tension : %.2f V\r\n", adc_val, tension);
+    gererLED(adc_val);
+
+    /* --- Séparateur et délai --- */
+    printf("\r\n");
+    HAL_Delay(2000);
+
+  }
   /* USER CODE END 3 */
+}
 /**
   * @brief System Clock Configuration
   * @retval None
