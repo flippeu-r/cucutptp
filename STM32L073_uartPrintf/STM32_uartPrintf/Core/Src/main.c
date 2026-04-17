@@ -13,7 +13,6 @@
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
-#include "DHT.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -224,7 +223,12 @@ int main(void)
 
 	  printf("Luminosite (ADC PA1) : %4lu  |  Tension : %.2f V\r\n", adc_val, tension);
 
-
+	  /* --- LED selon luminosité --- */
+	  if (adc_val > 100) {
+	      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);   // LED allumée
+	  } else {
+	      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); // LED éteinte
+	  }
 
 	  /* --- Lecture DHT22 PA0 --- */
 	  DHT22_GetData();
